@@ -59,8 +59,27 @@ class HomeController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect('http://localhost:8080/');
         }
-        else 
+        elseif($_SERVER['REQUEST_METHOD'] === 'POST') {
+                // Access the POST data
+                $tank_id = $_POST['tank_id'];
+            
+                // Use the $tank_id in your server-side logic
+                // ...
+            
+                // Send a response back to the client-side (JavaScript)
+                $response = [
+                    'message' => 'Data received successfully',
+                    'tank_id' => $tank_id
+                ];
+            
+                // Set the response header
+                header('Content-Type: application/json');
+            
+                // Output the JSON-encoded response
+                echo json_encode($response);
+        }
         return $this->render('home');
+        
     }
 
 }

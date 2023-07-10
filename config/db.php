@@ -1,11 +1,12 @@
 <?php
-use app\models\DBHandler;
+
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'pgsql:host=satao.db.elephantsql.com;port=5432;dbname=dxtshkjc',
     'username' => 'dxtshkjc',
-    'password' => DBHandler::getDBPassword(),
+    'password' => $_ENV['DB_Password'],
     'charset' => 'utf8',
+
 
     // Schema cache options (for production environment)
     //'enableSchemaCache' => true,

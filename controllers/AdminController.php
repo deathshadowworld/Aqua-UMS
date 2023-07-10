@@ -145,4 +145,16 @@ class AdminController extends Controller
         }
     }
 
+    public function actionDelete($id){
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == 't'){
+            if (DBHandler::deleteTank($id)){
+                return $this->redirect('http://localhost:8080/admin');
+            }
+            return $this->redirect('http://localhost:8080/admin');
+        }
+        else {
+            return $this->redirect('http://localhost:8080/admin');
+        }
+    }
+
 }

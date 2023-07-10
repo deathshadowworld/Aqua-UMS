@@ -65,6 +65,7 @@ $config = [
                 'logout' => 'logout/index',
                 'admin/appoint/<id:\d+>' => 'admin/appoint',
                 'admin/revoke/<id:\d+>' => 'admin/revoke',
+                'admin/delete/<id:\d+>' => 'admin/delete',
             ],
         ],
     ],

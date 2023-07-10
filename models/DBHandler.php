@@ -6,7 +6,7 @@ class DBHandler
 {
 
     public static function getDBPassword(){
-        return getenv('DB_Password');
+        return $_ENV['DB_Password'];
     }
 
     public function __construct()
@@ -137,6 +137,8 @@ class DBHandler
                 'org_id' => $each['org_id'],
             ];
         }
+
+        
         pg_close($connection);
         return $listresult;
     }
@@ -364,6 +366,25 @@ class DBHandler
         pg_close($connection);
         return $idlist;
     }
+    public static function getMessageIDs(){
+        #####
+        $host = 'satao.db.elephantsql.com';
+        $port = '5432';
+        $dbname = 'dxtshkjc';
+        $dbusername = 'dxtshkjc';
+        $password = self::getDBPassword();
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $query = "SELECT message_id FROM \"message\";";
+        $result = pg_query($connection, $query);
+        $list = pg_fetch_all($result);
+        #####
+        $idlist = array();
+        foreach ($list as $each){
+            $idlist[] = $each['message_id'].'';
+        }
+        pg_close($connection);
+        return $idlist;
+    }
 
     public static function getUsernamebyID($id){
         $host = 'satao.db.elephantsql.com';
@@ -476,6 +497,30 @@ class DBHandler
         }
         return $id;
     }
+
+    public static function generateMessageID(){
+        $list = DBHandler::getMessageIDs();
+        $id = mt_rand(100000, 999999).'';
+        $__id = false;
+        $__stop = true;
+        while ($__stop){
+            foreach ($list as $each){
+                if ($id == $each){
+                    $__id = true;
+                } else {
+                    $__id = false;
+                }
+            }
+            if ($__id){
+                $id = mt_rand(100000, 999999).'';
+            }
+            else {
+                
+                $__stop = false;
+            }
+        }
+        return $id;
+    }
     
     public static function addUser($user) {
         
@@ -537,9 +582,22 @@ class DBHandler
             $id,6,8,10,20,5,6,0,5,3,9,0,3,23,30,250,300,60
         );";
         $result = pg_query($connection, $query);
+        $mid = $id+1;
+        $mid2 = $mid+1;
+        $mid3 = $mid2+1;
+        $query = "INSERT INTO \"message\" (message_id,type,tank_id,time_posted,content) VALUES 
+        ($mid,  0, $id, NOW(), 'Warning Content'),
+        ($mid2, 1, $id, NOW(), 'Sensor Content'),
+        ($mid3, 2, $id, NOW(), 'TForecast Content')";
+        pg_query ($connection, $query);
+
+        
         pg_close($connection);
         return $resulttank;
     }
+
+
+
     public static function addSensor($new) {
         $name = $new['name'];
         $type = $new['type'];
@@ -794,6 +852,37 @@ public static function updatePassword($arr){
     $list = pg_fetch_assoc($result);
     pg_close($connection);
     return $list;
+}
+
+
+public static function deleteTank($id){
+    $host = 'satao.db.elephantsql.com';
+    $port = '5432';
+    $dbname = 'dxtshkjc';
+    $dbusername = 'dxtshkjc';
+    $password = self::getDBPassword();
+    $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+
+    $query = "DELETE FROM parameter WHERE tank_id = $id;";
+    pg_query($connection,$query);
+
+    $query = "DELETE FROM message WHERE tank_id = $id;";
+    pg_query($connection,$query);
+
+    $query = "DELETE FROM waterlog
+    WHERE sensor_id IN (
+        SELECT sensor_id
+        FROM sensor
+        WHERE tank_id = $id);";
+    pg_query($connection,$query);
+
+    $query = "DELETE FROM sensor
+    WHERE tank_id = $id;";
+    pg_query($connection,$query);
+
+    $query = "DELETE FROM tank WHERE tank_id = $id;";
+    pg_query($connection,$query);
+    return true;
 }
 
 }

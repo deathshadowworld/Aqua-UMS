@@ -19,8 +19,22 @@ $this->title = 'Aqua UMS Project';
 $tanklist = DBHandler::getTank();
 $nonadminlist = DBHandler::getNonAdmins();
 $adminlist = DBHandler::getAdmins();
-$tankparam = DBHandler::findParam('0');
-$currenttank = $tanklist['0'];
+
+
+$request = Yii::$app->request->get('tank_id');
+
+foreach ($tanklist as $each){
+    if ($each['id'] == $request){
+        $request = $each;
+        break;
+    }
+}
+
+$tank = $request ? $request : $tanklist['0'];
+$id = $tank['id'];
+$tankparam = DBHandler::findParam($id);
+
+$currenttank = $tank;
 $user = Yii::$app->user->identity;
 
 $s_options = [];
@@ -28,7 +42,6 @@ $s_options = [];
 foreach ($tanklist as $each){
     $s_options[$each['id']] = $each['name'];
 }
-
 
 ?>
 
@@ -99,11 +112,27 @@ foreach ($tanklist as $each){
                     }
                 ?>
                 </select>
+                <script>
+                const tankOption = document.getElementById('sel_picktank');
+                tankOption.value = <?= $tank['id'] ?>;
+                tankOption.addEventListener('change', function() {
+                    const selectTankId = tankOption.value;
+                    location.href ='http://localhost:8080/admin?tank_id='+selectTankId;
+                });
+
+            </script>
             </br></br>
             Description: <?= $currenttank['desc'] ?></br>
                 Location: <?= $currenttank['location'] ?></br></br>
                 <?= Html::submitButton('Update All Parameters', ['class' => 'btn btn-primary', 'name' => 'updateparam-button', 'id' => 'updateparam','form'=>'param-form']) ?>
-                </br></br><button id="bt_removetank">Remove Tank</button>
+                </br></br><button id="bt_removetank" onclick="confirmRemove()">Delete Tank</button>
+                <script>
+                    function confirmRemove(){
+                        if (confirm("Delete tank? This will also delete all messages, parameter, logs, and sensors related to this tank.") == true){
+                            location.href ="http://localhost:8080/admin/delete/<?= $id?>";
+                        }
+                    }
+                </script>
             </div>
 
 

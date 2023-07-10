@@ -5,18 +5,25 @@
 /** @var yii\bootstrap4\ActiveForm $form */
 /** @var app\models\LoginForm $model */
 
-use yii\bootstrap4\ActiveForm;
-use yii\bootstrap4\Html;
-use app\models\LoginForm;
 use app\models\DBHandler;
 
-$model = new LoginForm;
+
+
 $this->title = 'Aqua UMS Project';
 $tanklist = DBHandler::getTank();
-$id = '0';
-$tank = $tanklist[$id];
-$labels;
+$request = Yii::$app->request->get('tank_id');
 
+foreach ($tanklist as $each){
+    if ($each['id'] == $request){
+        $request = $each;
+        break;
+    }
+}
+
+$tank = $request ? $request : $tanklist['0'];
+$id = $tank['id'];
+$status = false;
+try {
 
 $loglist = DBHandler::findSensorLogs($id);
 $sensorlist = $loglist['sensor_ids'];
@@ -52,16 +59,18 @@ foreach($sensor2 as $each){
     ];
 }
 
-#echo var_dump($sensorlist[0]);
-
 $keytype1 = array_keys($type1);
 $keytype2 = array_keys($type2);
-#echo var_dump($type1[reset($keytype1)]).'</br>';
 $dep1 = array_column($type1, 'depth');
 $dep2 = array_column($type2, 'depth');
 $dep1 = end($dep1);
 $dep2 = end($dep2);
+$status = true;
+}
 
+catch(Exception $e){
+    echo "Tank has no sensors or logged data, therefore no data to be displayed.";
+}
 $message = DBHandler::sortedMessages($id);
 ?>
 
@@ -91,8 +100,8 @@ $message = DBHandler::sortedMessages($id);
         <div class="grid-item widget mini-widget" id="phdiv">pH Level<canvas id="cv_ph"></canvas></div>
         <div class="grid-item widget main-widget" style="position: relative;" id="scorediv">Water Quality Score
             <canvas id="mainChart" style="max-height: 450px;"></canvas>
-            <span class="scoreleft" id="mainleft">Fish Tank</br><b style="font-size: 40px;">90%</b></span>
-            <span class="scoreright" id="mainright">Biofilter</br><b style="font-size: 40px;">95%</b></span>
+            <span class="scoreleft" id="mainleft">Fish Tank</br><b style="font-size: 40px;">N/A%</b></span>
+            <span class="scoreright" id="mainright">Biofilter</br><b style="font-size: 40px;">N/A%</b></span>
         </div>
         <div class="grid-item widget mini-widget" id="dodiv">Dissolved Oxygen<canvas id="cv_do"></canvas></div>
         <div class="grid-item widget mini-widget " id="sadiv">Salinity<canvas id="cv_sal"></canvas></div>
@@ -109,9 +118,18 @@ $message = DBHandler::sortedMessages($id);
                 ?>
                 </select>
             </span>
-            Tank Name: <?= $each['name'] ?> </br>
-            Content: <?= $each['desc'] ?></br>
-            Location: <?= $each['location'] ?>
+            Tank Name: <?= $tank['name'] ?> </br>
+            Content: <?= $tank['desc'] ?></br>
+            Location: <?= $tank['location'] ?>
+            <script>
+                const tankOption = document.getElementById('sel_displaytank');
+                tankOption.value = <?= $tank['id'] ?>;
+                tankOption.addEventListener('change', function() {
+                    const selectTankId = tankOption.value;
+                    location.href ='http://localhost:8080/home?tank_id='+selectTankId;
+                });
+
+            </script>
         </div>
         <div class="grid-item row-end" style="grid-row: 9;"></div> <!--next line-->
         <div class="grid-item widget mini-widget" id="tudiv">Turbidity<canvas id="cv_tur"></canvas></div>
@@ -139,11 +157,7 @@ $message = DBHandler::sortedMessages($id);
                         echo '<td>'.$each['time_posted'].'</td></tr>';
                     }
                     ?>
-                <tr>
-                    <td>0</td>
-                    <td>Ending</td>
-                    <td>00:00 00/00/0000</td>
-                </tr>
+
             </table>
         </div>
         <div class="grid-item widget messagecontent">
@@ -160,11 +174,7 @@ $message = DBHandler::sortedMessages($id);
                         echo '<td>'.$each['time_posted'].'</td></tr>';
                     }
                     ?>
-                <tr>
-                    <td>0</td>
-                    <td>Ending</td>
-                    <td>00:00 00/00/0000</td>
-                </tr>
+
             </table>
         </div>
         <div class="grid-item widget messagecontent">
@@ -181,11 +191,7 @@ $message = DBHandler::sortedMessages($id);
                         echo '<td>'.$each['time_posted'].'</td></tr>';
                     }
                     ?>
-                <tr>
-                    <td>0</td>
-                    <td>Ending</td>
-                    <td>00:00 00/00/0000</td>
-                </tr>
+
             </table>
         </div>
     </div>
@@ -212,6 +218,8 @@ $message = DBHandler::sortedMessages($id);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.1/chart.min.js"></script>
     
 <script>
+
+<?php if ($status) { ?>
         const ph_chartlabel = <?= json_encode(array_keys($type1))?>;
         const ph_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
         const ph_data1 = <?= json_encode(array_column($type1, 'ph'))?>;
@@ -681,6 +689,7 @@ var donutChart = new Chart(ch_main, {
 
 document.getElementById('mainright').innerHTML = `Fish Tank</br><b style="font-size: 40px;">${fishTankQuality}%</b>`;
 document.getElementById('mainleft').innerHTML = `Biofilter</br><b style="font-size: 40px;">${bioFilterQuality}%</b>`;
+<?php } ?>
     </script>
 </body>
 </html>

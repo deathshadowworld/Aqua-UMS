@@ -4,6 +4,11 @@ namespace app\models;
 use Yii;
 class DBHandler
 {
+
+    public static function getDBPassword(){
+        return getenv('DB_Password');
+    }
+
     public function __construct()
     {   
         
@@ -21,7 +26,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         ####
         $query = "SELECT * FROM \"user\";";
@@ -52,7 +57,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         ####
         $query = "SELECT * FROM \"organization\";";
@@ -83,7 +88,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         ####
         $query = "SELECT * FROM \"association\";";
@@ -114,7 +119,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         ####
         $query = "SELECT * FROM \"tank\";";
@@ -142,7 +147,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         ####
         $query = "SELECT * FROM \"sensor\";";
@@ -168,7 +173,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         ####
         $query = "SELECT * FROM \"message\";";
@@ -199,7 +204,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         ####
         $query = "SELECT * FROM \"waterlog\";";
@@ -230,7 +235,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         ####
         $query = "SELECT * FROM \"parameter\";";
@@ -279,7 +284,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         $query = "SELECT id,fullname FROM \"user\" WHERE admin = true;";
         $result = pg_query($connection, $query);
@@ -292,7 +297,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         $query = "SELECT id,fullname FROM \"user\" WHERE admin = false;";
         $result = pg_query($connection, $query);
@@ -308,7 +313,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         $query = "SELECT id FROM \"user\";";
         $result = pg_query($connection, $query);
@@ -327,7 +332,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         $query = "SELECT tank_id FROM \"tank\";";
         $result = pg_query($connection, $query);
@@ -346,7 +351,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         $query = "SELECT sensor_id FROM \"sensor\";";
         $result = pg_query($connection, $query);
@@ -365,7 +370,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         $query = "SELECT username FROM \"user\" WHERE id = $id;";
         $result = pg_query($connection, $query);
@@ -378,7 +383,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         $query = "SELECT username FROM \"user\";";
         $result = pg_query($connection, $query);
@@ -486,7 +491,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $dbpassword = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $dbpassword = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");  
         $query = "INSERT INTO \"user\" (id,username,password,fullname,email,admin,authkey,accesstoken) VALUES (".$id.",'".$username."','".$password."','".$fullname."','".$email."',false,'".$authkey."','".$token."');";
         $result = pg_query($connection, $query);
@@ -504,7 +509,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $dbpassword = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $dbpassword = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");  
         $query = "INSERT INTO \"tank\" (tank_id,name,description,location,org_id) VALUES (".$id.",'".$name."','".$desc."','".$location."',0);";
         $resulttank = pg_query($connection, $query);
@@ -545,7 +550,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $dbpassword = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $dbpassword = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");  
         $query = "INSERT INTO \"sensor\" (sensor_id,tank_id,name,type) VALUES (".$id.",'".$tank."','".$name."','".$type."');";
         $result = pg_query($connection, $query);
@@ -565,7 +570,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         #####
         $query = "SELECT * FROM \"user\" WHERE username = '$value';";
@@ -589,7 +594,7 @@ class DBHandler
          $port = '5432';
          $dbname = 'dxtshkjc';
          $dbusername = 'dxtshkjc';
-         $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+         $password = self::getDBPassword();
          $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
          #####
          $query = "SELECT sensor_id FROM \"sensor\" WHERE tank_id = '$id';";
@@ -604,7 +609,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         #####
         $query = "SELECT * FROM \"parameter\" WHERE tank_id = '$id';";
@@ -619,7 +624,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         #####
         $sensors = self::findTankSensors($id);
@@ -640,7 +645,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         ####
         $query = "SELECT * FROM \"parameter\" WHERE tank_id = $value;";
@@ -656,7 +661,7 @@ class DBHandler
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         ####
         $query = "UPDATE \"parameter\" SET 
@@ -691,7 +696,7 @@ public static function sortedMessages($id){
     $port = '5432';
     $dbname = 'dxtshkjc';
     $dbusername = 'dxtshkjc';
-    $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+    $password = self::getDBPassword();
     $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
     #####
     $query = "SELECT * FROM \"message\" WHERE tank_id = '$id';";
@@ -729,7 +734,7 @@ public static function sortedMessages($id){
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         ####
         $query = "UPDATE \"user\" SET admin = true WHERE id = $id;";
@@ -745,7 +750,7 @@ public static function sortedMessages($id){
         $port = '5432';
         $dbname = 'dxtshkjc';
         $dbusername = 'dxtshkjc';
-        $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+        $password = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
         ####
         $query = "UPDATE \"user\" SET admin = false WHERE id = $id;";
@@ -763,7 +768,7 @@ public static function updateUser($arr){
     $port = '5432';
     $dbname = 'dxtshkjc';
     $dbusername = 'dxtshkjc';
-    $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+    $password = self::getDBPassword();
     $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
     ####
     $query = "UPDATE \"user\" SET fullname = '$arr[fullname]', email = '$arr[email]' WHERE username = '$arr[username]';";
@@ -779,7 +784,7 @@ public static function updatePassword($arr){
     $port = '5432';
     $dbname = 'dxtshkjc';
     $dbusername = 'dxtshkjc';
-    $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
+    $password = self::getDBPassword();
     $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
     $hashed = hash('sha256', $arr['password']);
     ####

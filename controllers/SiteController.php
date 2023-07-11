@@ -71,7 +71,7 @@ class SiteController extends Controller
 
         if (!Yii::$app->user->isGuest) {
             
-            return $this->redirect("http://localhost:8080/home");
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/home");
         }
         else 
             return $this->render("index");
@@ -80,14 +80,14 @@ class SiteController extends Controller
     public function actionLogin()
     {        
         if (!Yii::$app->user->isGuest) {
-            return $this->redirect("http://localhost:8080/home");
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/home");
         }
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect("http://localhost:8080/home");
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/home");
         }
         $model->password = "";
         Yii::$app->session->setFlash("model", $model);
-        return $this->redirect("http://localhost:8080/");
+        return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/");
     }
 }

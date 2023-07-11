@@ -18,21 +18,21 @@ class ProfileController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
+            "access" => [
+                "class" => AccessControl::className(),
+                "only" => ["logout"],
+                "rules" => [
                     [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
+                        "actions" => ["logout"],
+                        "allow" => true,
+                        "roles" => ["@"],
                     ],
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
+            "verbs" => [
+                "class" => VerbFilter::className(),
+                "actions" => [
+                    "logout" => ["post"],
                 ],
             ],
         ];
@@ -44,12 +44,12 @@ class ProfileController extends Controller
     public function actions()
     {
         return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
+            "error" => [
+                "class" => "yii\web\ErrorAction",
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            "captcha" => [
+                "class" => "yii\captcha\CaptchaAction",
+                "fixedVerifyCode" => YII_ENV_TEST ? "testme" : null,
             ],
         ];
     }
@@ -57,23 +57,23 @@ class ProfileController extends Controller
     public function actionIndex()
     {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/');
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/");
         }
         else 
-        return $this->render('profile');
+        return $this->render("profile");
     }
 
     public function actionUpdateUser(){
         if (Yii::$app->user->isGuest) {
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/');
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/");
         }
         else {
             $model = new ProfileForm();
             if ($model->load(Yii::$app->request->post()) && $model->updateProfile()){
-                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/profile');
+                return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/profile");
             }
-            Yii::$app->session->setFlash('model', $model);
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/profile');
+            Yii::$app->session->setFlash("model", $model);
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/profile");
         }
             
     }

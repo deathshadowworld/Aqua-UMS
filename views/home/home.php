@@ -73,7 +73,6 @@ catch(Exception $e){
 }
 $message = DBHandler::sortedMessages($id);
 
-
 ?>
 
 <!DOCTYPE html>

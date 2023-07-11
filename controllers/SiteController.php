@@ -26,21 +26,21 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
+            "access" => [
+                "class" => AccessControl::className(),
+                "only" => ["logout"],
+                "rules" => [
                     [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
+                        "actions" => ["logout"],
+                        "allow" => true,
+                        "roles" => ["@"],
                     ],
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
+            "verbs" => [
+                "class" => VerbFilter::className(),
+                "actions" => [
+                    "logout" => ["post"],
                 ],
             ],
         ];
@@ -52,12 +52,12 @@ class SiteController extends Controller
     public function actions()
     {
         return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
+            "error" => [
+                "class" => "yii\web\ErrorAction",
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            "captcha" => [
+                "class" => "yii\captcha\CaptchaAction",
+                "fixedVerifyCode" => YII_ENV_TEST ? "testme" : null,
             ],
         ];
     }
@@ -65,28 +65,29 @@ class SiteController extends Controller
     public function actionIndex()
     {   
         #echo var_dump(DBHandler::getUserIDs())."</br>";
-        #echo var_dump(DBHandler::getUsernamebyID('2'))."</br>";
-        #echo var_dump(DBHandler::findParam('0'))."</br>";
+        #echo var_dump(DBHandler::getUsernamebyID("2"))."</br>";
+        #echo var_dump(DBHandler::findParam("0"))."</br>";
 
 
         if (!Yii::$app->user->isGuest) {
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/home');
+            
+            return $this->redirect("http://localhost:8080/home");
         }
         else 
-            return $this->render('index');
+            return $this->render("index");
     }
 
     public function actionLogin()
     {        
         if (!Yii::$app->user->isGuest) {
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/home');
+            return $this->redirect("http://localhost:8080/home");
         }
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/home');
+            return $this->redirect("http://localhost:8080/home");
         }
-        $model->password = '';
-        Yii::$app->session->setFlash('model', $model);
-        return $this->redirect(Yii::$app->homeUrl);
+        $model->password = "";
+        Yii::$app->session->setFlash("model", $model);
+        return $this->redirect("http://localhost:8080/");
     }
 }

@@ -18,21 +18,21 @@ class AdminController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
+            "access" => [
+                "class" => AccessControl::className(),
+                "only" => ["logout"],
+                "rules" => [
                     [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
+                        "actions" => ["logout"],
+                        "allow" => true,
+                        "roles" => ["@"],
                     ],
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
+            "verbs" => [
+                "class" => VerbFilter::className(),
+                "actions" => [
+                    "logout" => ["post"],
                 ],
             ],
         ];
@@ -44,12 +44,12 @@ class AdminController extends Controller
     public function actions()
     {
         return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
+            "error" => [
+                "class" => "yii\web\ErrorAction",
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            "captcha" => [
+                "class" => "yii\captcha\CaptchaAction",
+                "fixedVerifyCode" => YII_ENV_TEST ? "testme" : null,
             ],
         ];
     }
@@ -58,126 +58,126 @@ class AdminController extends Controller
     {  
         #echo DBHandler::removeAdmin(3);
         $new = [
-            'tank_id' => '0',
-            'ph_min' => '0',
-            'ph_max' => '1',
-            'do_min' => '0',
-            'do_max' => '1',
-            'salinity_min' => '0',
-            'salinity_max' => '1',
-            'ammonia_min' => '0',
-            'ammonia_max' => '1',
-            'nitrate_min' => '0',
-            'nitrate_max' => '1',
-            'turbidity_min' => '0',
-            'turbidity_max' => '1',
-            'temp_min' => '0',
-            'temp_max' => '1',
-            'depth_min' => '0',
-            'depth_max' => '1',
-            'cycle_length' => 60,
+            "tank_id" => "0",
+            "ph_min" => "0",
+            "ph_max" => "1",
+            "do_min" => "0",
+            "do_max" => "1",
+            "salinity_min" => "0",
+            "salinity_max" => "1",
+            "ammonia_min" => "0",
+            "ammonia_max" => "1",
+            "nitrate_min" => "0",
+            "nitrate_max" => "1",
+            "turbidity_min" => "0",
+            "turbidity_max" => "1",
+            "temp_min" => "0",
+            "temp_max" => "1",
+            "depth_min" => "0",
+            "depth_max" => "1",
+            "cycle_length" => 60,
         ];
         #DBHandler::updateParam($new);
-        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == 't'){
-            return $this->render('index');
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == "t"){
+            return $this->render("index");
         }
         else
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/home');
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/home");
 
     }
     public function actionAddTank(){
-        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == 't'){
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == "t"){
             $model = new TankForm();
             if ($model->load(Yii::$app->request->post()) && $model->registerTank()){
                 
-                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+                return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
             }
         }
         else
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
     }
     public function actionAddSensor(){
-        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == 't'){
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == "t"){
             $model = new SensorForm();
             if ($model->load(Yii::$app->request->post()) && $model->registerSensor()){
-                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+                return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
             }
         }
         else
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
     }
     public function actionUpdateParam(){
 
-        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == 't'){
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == "t"){
             $model = new ParamForm();
             if ($model->load(Yii::$app->request->post()) && $model->updateParams()){
-                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+                return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
             }
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
         }
         else {
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
         }
     }
 
 
 
     public function actionAppoint($id){
-        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == 't'){
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == "t"){
             if (DBHandler::addAdmin($id)){
-                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+                return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
             }
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
         }
         else {
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
         }
     }
 
     public function actionRevoke($id){
-        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == 't'){
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == "t"){
             if (DBHandler::removeAdmin($id)){
-                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+                return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
             }
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
         }
         else {
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
         }
     }
 
     public function actionDelete($id){
-        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == 't'){
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == "t"){
             if (DBHandler::deleteTank($id)){
-                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+                return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
             }
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
         }
         else {
-            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
+            return $this->redirect("http://$GLOBALS[HOSTNAME]:8080/admin");
         }
     }
 
     public function actionSensor(){
-        $sensor_id = $_GET['sensor_id'];
-        $time_taken = $_GET['time_taken'];
-        #$info['ph'];
-        #$info['do'];
-        #$info['salinity'];
-        #$info['ammonia'];
-        #$info['nitrate'];
-        #$info['turbidity'];
-        #$info['temp'];
-        #$info['depth'];
-        #$info['type'];
-        #info['username']; #for admin rights
+        $sensor_id = $_GET["sensor_id"];
+        $time_taken = $_GET["time_taken"];
+        #$info["ph"];
+        #$info["do"];
+        #$info["salinity"];
+        #$info["ammonia"];
+        #$info["nitrate"];
+        #$info["turbidity"];
+        #$info["temp"];
+        #$info["depth"];
+        #$info["type"];
+        #info["username"]; #for admin rights
         
         #$content = var_dump($_GET);
-        return $this->renderContent($sensor_id.' '.$time_taken);    
+        return $this->renderContent($sensor_id." ".$time_taken);    
     }
 
     public function actionLog($info){
-        return 'log not added';
+        return "log not added";
     }
 
 }

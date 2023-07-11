@@ -72,6 +72,8 @@ catch(Exception $e){
     echo "Tank has no sensors or logged data, therefore no data to be displayed.";
 }
 $message = DBHandler::sortedMessages($id);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -88,7 +90,7 @@ $message = DBHandler::sortedMessages($id);
 <body>
 
     <div style="height:10vh; width:98vw;">
-        <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821207343374417/LOGO_UMS_putih.png" style="max-height: 9vh;" onclick="location.href ='http://localhost:8080/home';"></span>
+        <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821207343374417/LOGO_UMS_putih.png" style="max-height: 9vh;" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';"></span>
         <span class="header"><b style="font-size: 30px;">Aqua UMS Project</b></br>Kerjasama Fakulti Komputeran dan Informatik dan Institut Penyelidikan Marin Borneo</span>
         <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821361966387350/EcoCampus-Putih.png" style="max-height: 9vh;"></span>
     </div>
@@ -126,7 +128,7 @@ $message = DBHandler::sortedMessages($id);
                 tankOption.value = <?= $tank['id'] ?>;
                 tankOption.addEventListener('change', function() {
                     const selectTankId = tankOption.value;
-                    location.href ='http://localhost:8080/home?tank_id='+selectTankId;
+                    location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home?tank_id='+selectTankId;
                 });
 
             </script>
@@ -208,10 +210,10 @@ $message = DBHandler::sortedMessages($id);
 
 
     <div class="bottomleftnav" id="navbuttons">
-        <div id="adminbutton" class="navicon" onclick="location.href ='http://localhost:8080/admin';">Admin</div>
-        <div id="homebutton" class="navicon" onclick="location.href ='http://localhost:8080/home';">Home</div>
-        <div id="profilebutton" class="navicon" onclick="location.href ='http://localhost:8080/profile';">Profile</div>
-        <div id="logoutbutton" class="logout" onclick="location.href ='http://localhost:8080/logout';">Logout</div>
+        <div id="adminbutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/admin';">Admin</div>
+        <div id="homebutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';">Home</div>
+        <div id="profilebutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/profile';">Profile</div>
+        <div id="logoutbutton" class="logout" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/logout';">Logout</div>
     </div>
     
 

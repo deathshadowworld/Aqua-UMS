@@ -60,7 +60,7 @@ class PasswordController extends Controller
             return $this->render('password');
         }
         else {
-            return $this->redirect('http://localhost:8080/');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/');
         }
         
     }
@@ -69,15 +69,15 @@ class PasswordController extends Controller
     {
         
         if (Yii::$app->user->isGuest) {
-            return $this->redirect('http://localhost:8080/');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/');
         }
         else {
             $model = new PasswordForm();
             if ($model->load(Yii::$app->request->post()) && $model->updatePassword()){
-                return $this->redirect('http://localhost:8080/profile');
+                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/profile');
             }
             Yii::$app->session->setFlash('model', $model);
-            return $this->redirect('http://localhost:8080/profile');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/profile');
         }
     }
 

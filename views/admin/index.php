@@ -58,7 +58,7 @@ foreach ($tanklist as $each){
 <body>
     
     <div style="height:10vh; width:98vw;">
-        <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821207343374417/LOGO_UMS_putih.png" style="max-height: 9vh;" onclick="location.href ='http://localhost:8080/home';"></span>
+        <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821207343374417/LOGO_UMS_putih.png" style="max-height: 9vh;" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';"></span>
         <span class="header"><b style="font-size: 30px;">Aqua UMS Project</b></br>Kerjasama Fakulti Komputeran dan Informatik dan Institut Penyelidikan Marin Borneo</span>
         <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821361966387350/EcoCampus-Putih.png" style="max-height: 9vh;"></span>
         
@@ -74,7 +74,7 @@ foreach ($tanklist as $each){
                 <ul>
                     <?php
                     foreach ($nonadminlist as $each){
-                        echo "<li>ID: ".$each['id']." | ".$each['fullname']."</br><button id='bt_appoint".$each['id']."' onclick=\"location.href ='http://localhost:8080/admin/appoint/".$each['id']."';\">Appoint ".$each['fullname']."</button></li></br>";
+                        echo "<li>ID: ".$each['id']." | ".$each['fullname']."</br><button id='bt_appoint".$each['id']."' onclick=\"location.href ='http://$GLOBALS[HOSTNAME]:8080/admin/appoint/".$each['id']."';\">Appoint ".$each['fullname']."</button></li></br>";
                     }
                     ?>
 
@@ -117,7 +117,7 @@ foreach ($tanklist as $each){
                 tankOption.value = <?= $tank['id'] ?>;
                 tankOption.addEventListener('change', function() {
                     const selectTankId = tankOption.value;
-                    location.href ='http://localhost:8080/admin?tank_id='+selectTankId;
+                    location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/admin?tank_id='+selectTankId;
                 });
 
             </script>
@@ -129,7 +129,7 @@ foreach ($tanklist as $each){
                 <script>
                     function confirmRemove(){
                         if (confirm("Delete tank? This will also delete all messages, parameter, logs, and sensors related to this tank.") == true){
-                            location.href ="http://localhost:8080/admin/delete/<?= $id?>";
+                            location.href ="http://<?= $GLOBALS['HOSTNAME'] ?>:8080/admin/delete/<?= $id?>";
                         }
                     }
                 </script>
@@ -169,7 +169,7 @@ foreach ($tanklist as $each){
                         if (Yii::$app->user->identity->id == $each['id']){
                             $id_self = ' (Yourself)';
                         }
-                        echo "<li>ID: ".$each['id']." | ".$each['fullname'].$id_self."</br><button id='bt_revoke".$each['id']."' onclick=\"location.href ='http://localhost:8080/admin/revoke/".$each['id']."';\">Revoke ".$each['fullname'].$id_self."</button></li></br>";
+                        echo "<li>ID: ".$each['id']." | ".$each['fullname'].$id_self."</br><button id='bt_revoke".$each['id']."' onclick=\"location.href ='http://$GLOBALS[HOSTNAME]:8080/admin/revoke/".$each['id']."';\">Revoke ".$each['fullname'].$id_self."</button></li></br>";
                     }
 
                     ?>
@@ -238,10 +238,10 @@ foreach ($tanklist as $each){
 
 
     <div class="bottomleftnav" id="navbuttons">
-        <div id="adminbutton" class="navicon" onclick="location.href ='http://localhost:8080/admin';">Admin</div>
-        <div id="homebutton" class="navicon" onclick="location.href ='http://localhost:8080/home';">Home</div>
-        <div id="profilebutton" class="navicon" onclick="location.href ='http://localhost:8080/profile';">Profile</div>
-        <div id="logoutbutton" class="logout" onclick="location.href ='http://localhost:8080/logout';">Logout</div>
+        <div id="adminbutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/admin';">Admin</div>
+        <div id="homebutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';">Home</div>
+        <div id="profilebutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/profile';">Profile</div>
+        <div id="logoutbutton" class="logout" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/logout';">Logout</div>
     </div>
    
 </body>

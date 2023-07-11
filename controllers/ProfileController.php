@@ -57,7 +57,7 @@ class ProfileController extends Controller
     public function actionIndex()
     {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect('http://localhost:8080/');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/');
         }
         else 
         return $this->render('profile');
@@ -65,15 +65,15 @@ class ProfileController extends Controller
 
     public function actionUpdateUser(){
         if (Yii::$app->user->isGuest) {
-            return $this->redirect('http://localhost:8080/');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/');
         }
         else {
             $model = new ProfileForm();
             if ($model->load(Yii::$app->request->post()) && $model->updateProfile()){
-                return $this->redirect('http://localhost:8080/profile');
+                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/profile');
             }
             Yii::$app->session->setFlash('model', $model);
-            return $this->redirect('http://localhost:8080/profile');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/profile');
         }
             
     }

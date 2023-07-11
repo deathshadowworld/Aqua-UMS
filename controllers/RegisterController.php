@@ -57,7 +57,7 @@ class RegisterController extends Controller
 
     public function actionIndex()
     {if (!Yii::$app->user->isGuest) {
-        return $this->redirect('http://localhost:8080/home');
+        return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/home');
     }
     else 
         return $this->render('index');
@@ -66,12 +66,12 @@ class RegisterController extends Controller
     public function actionRegister(){
         $model = new RegisterForm();
         if ($model->load(Yii::$app->request->post()) && $model->register()){
-            return $this->redirect('http://localhost:8080/');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/');
         }
         $model->password = '';
         $model->password2 = '';
         Yii::$app->session->setFlash('model', $model);
-        return $this->redirect('http://localhost:8080/register');
+        return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/register');
     }
 
 }

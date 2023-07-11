@@ -66,6 +66,8 @@ $config = [
                 'admin/appoint/<id:\d+>' => 'admin/appoint',
                 'admin/revoke/<id:\d+>' => 'admin/revoke',
                 'admin/delete/<id:\d+>' => 'admin/delete',
+                'admin/api/add-sensor' => 'admin/sensor',
+                'admin/api/add-log/<info>' => 'admin/log',
             ],
         ],
     ],

@@ -58,7 +58,7 @@ $this->title = 'Aqua UMS Project';
             <div class="offset-lg-1 col-lg-11">
                 <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button', 'id' => 'loginsubmit']) ?></br></br>
         <?php ActiveForm::end(); ?>
-                <button id="registerbutton" onclick="location.href ='http://localhost:8080/register';">Register</button>
+                <button id="registerbutton" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/register';">Register</button>
             </div>
         </div>
 

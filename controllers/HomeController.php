@@ -57,7 +57,7 @@ class HomeController extends Controller
     public function actionIndex()
     {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect('http://localhost:8080/');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/');
         }
         elseif($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Access the POST data

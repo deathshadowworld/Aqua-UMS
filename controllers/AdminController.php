@@ -82,40 +82,41 @@ class AdminController extends Controller
             return $this->render('index');
         }
         else
-            return $this->redirect('http://localhost:8080/home');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/home');
 
     }
     public function actionAddTank(){
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == 't'){
             $model = new TankForm();
             if ($model->load(Yii::$app->request->post()) && $model->registerTank()){
-                return $this->redirect('http://localhost:8080/admin');
+                
+                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
             }
         }
         else
-            return $this->redirect('http://localhost:8080/admin');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
     }
     public function actionAddSensor(){
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == 't'){
             $model = new SensorForm();
             if ($model->load(Yii::$app->request->post()) && $model->registerSensor()){
-                return $this->redirect('http://localhost:8080/admin');
+                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
             }
         }
         else
-            return $this->redirect('http://localhost:8080/admin');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
     }
     public function actionUpdateParam(){
 
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == 't'){
             $model = new ParamForm();
             if ($model->load(Yii::$app->request->post()) && $model->updateParams()){
-                return $this->redirect('http://localhost:8080/admin');
+                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
             }
-            return $this->redirect('http://localhost:8080/admin');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
         }
         else {
-            return $this->redirect('http://localhost:8080/admin');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
         }
     }
 
@@ -124,37 +125,59 @@ class AdminController extends Controller
     public function actionAppoint($id){
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == 't'){
             if (DBHandler::addAdmin($id)){
-                return $this->redirect('http://localhost:8080/admin');
+                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
             }
-            return $this->redirect('http://localhost:8080/admin');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
         }
         else {
-            return $this->redirect('http://localhost:8080/admin');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
         }
     }
 
     public function actionRevoke($id){
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == 't'){
             if (DBHandler::removeAdmin($id)){
-                return $this->redirect('http://localhost:8080/admin');
+                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
             }
-            return $this->redirect('http://localhost:8080/admin');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
         }
         else {
-            return $this->redirect('http://localhost:8080/admin');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
         }
     }
 
     public function actionDelete($id){
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->admin == 't'){
             if (DBHandler::deleteTank($id)){
-                return $this->redirect('http://localhost:8080/admin');
+                return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
             }
-            return $this->redirect('http://localhost:8080/admin');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
         }
         else {
-            return $this->redirect('http://localhost:8080/admin');
+            return $this->redirect('http://$GLOBALS[HOSTNAME]:8080/admin');
         }
+    }
+
+    public function actionSensor(){
+        $sensor_id = $_GET['sensor_id'];
+        $time_taken = $_GET['time_taken'];
+        #$info['ph'];
+        #$info['do'];
+        #$info['salinity'];
+        #$info['ammonia'];
+        #$info['nitrate'];
+        #$info['turbidity'];
+        #$info['temp'];
+        #$info['depth'];
+        #$info['type'];
+        #info['username']; #for admin rights
+        
+        #$content = var_dump($_GET);
+        return $this->renderContent($sensor_id.' '.$time_taken);    
+    }
+
+    public function actionLog($info){
+        return 'log not added';
     }
 
 }

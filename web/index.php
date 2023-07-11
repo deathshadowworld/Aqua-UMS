@@ -7,8 +7,13 @@ defined('YII_ENV') or define('YII_ENV', 'dev');
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
 require __DIR__ . '/../vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable('E:\Downloads\FYP\LI\Aqua Project\phprepo\basic');
+$_DIRENV = 'E:\Downloads\FYP\LI\Aqua Project\phprepo\basic';
+
+$dotenv = Dotenv\Dotenv::createImmutable($_DIRENV);
 $dotenv->load();
+
+$GLOBALS['HOSTNAME'] = $_ENV['HOSTNAME'];
+
 
 $config = require __DIR__ . '/../config/web.php';
 

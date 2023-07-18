@@ -22,14 +22,14 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         #'https://cdn.discordapp.com/attachments/616833107965771776/1097357861010546798/styles.css',
-        'assets/styles.css',
-        #'https://cdn.discordapp.com/attachments/617712184553766924/1128138333562867762/styles.css',
+        #'assets/styles.css',
+        'https://cdn.discordapp.com/attachments/617712184553766924/1128138333562867762/styles.css',
     ];
     public $js = [
         'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.1/chart.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js',
-        'assets/script.js',
-        #'https://cdn.discordapp.com/attachments/617712184553766924/1128138333227327538/script.js',
+        #'assets/script.js',
+        'https://cdn.discordapp.com/attachments/617712184553766924/1128138333227327538/script.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

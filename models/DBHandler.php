@@ -385,6 +385,25 @@ class DBHandler
         pg_close($connection);
         return $idlist;
     }
+    public static function getLogIDs(){
+        #####
+        $host = 'satao.db.elephantsql.com';
+        $port = '5432';
+        $dbname = 'dxtshkjc';
+        $dbusername = 'dxtshkjc';
+        $password = self::getDBPassword();
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $query = "SELECT log_id FROM \"waterlog\";";
+        $result = pg_query($connection, $query);
+        $list = pg_fetch_all($result);
+        #####
+        $idlist = array();
+        foreach ($list as $each){
+            $idlist[] = $each['log_id'].'';
+        }
+        pg_close($connection);
+        return $idlist;
+    }
 
     public static function getUsernamebyID($id){
         $host = 'satao.db.elephantsql.com';
@@ -476,6 +495,32 @@ class DBHandler
     }
     public static function generateSensorID(){
         $list = DBHandler::getSensorIDs();
+        $id = mt_rand(100000, 999999).'';
+        $__id = false;
+        $__stop = true;
+        while ($__stop){
+            foreach ($list as $each){
+                if ($id == $each){
+                    $__id = true;
+                } else {
+                    $__id = false;
+                }
+            }
+            if ($__id){
+                $id = mt_rand(100000, 999999).'';
+            }
+            else {
+                
+                $__stop = false;
+            }
+        }
+        return $id;
+    }
+
+
+
+    public static function generateLogID(){
+        $list = DBHandler::getLogIDs();
         $id = mt_rand(100000, 999999).'';
         $__id = false;
         $__stop = true;
@@ -613,6 +658,33 @@ class DBHandler
         $query = "INSERT INTO \"sensor\" (sensor_id,tank_id,name,type) VALUES (".$id.",'".$tank."','".$name."','".$type."');";
         $result = pg_query($connection, $query);
         pg_close($connection);
+        return $id;
+    }
+
+    public static function addLog($new) {
+        $sensor_id =$new['sensor_id'];
+        $datetime = $new['datetime'];
+        $ph = $new['ph'];
+        $do = $new['do'];
+        $sal = $new['sal'];
+        $amm = $new['amm'];
+        $nit = $new['nit'];
+        $tur = $new['tur'];
+        $temp = $new['temp'];
+        $dep = $new['dep'];
+        $type = $new['type'];
+        $id = self::generateLogID();
+        #####
+        $host = 'satao.db.elephantsql.com';
+        $port = '5432';
+        $dbname = 'dxtshkjc';
+        $dbusername = 'dxtshkjc';
+        $dbpassword = self::getDBPassword();
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");  
+        $query = "INSERT INTO \"waterlog\" (log_id,sensor_id,time_taken,\"pH\",\"Do\",salinity,ammonia, nitrate, turbidity,temp,depth,type) VALUES 
+        (".$id.",'".$sensor_id."','".$datetime."','".$ph."','".$do."','".$sal."','".$amm."','".$nit."','".$tur."','".$temp."','".$dep."','".$type."');";
+        $result = pg_query($connection, $query);
+        pg_close($connection);
         return $result;
     }
 
@@ -642,8 +714,27 @@ class DBHandler
         if (Yii::$app->user->identity->admin == 't'){
             return true;
         }
-        else
-            return false;
+        else {
+            return false; 
+        }
+    }
+
+    public static function findAdminbyID($id){
+        $host = 'satao.db.elephantsql.com';
+        $port = '5432';
+        $dbname = 'dxtshkjc';
+        $dbusername = 'dxtshkjc';
+        $password = DBHandler::getDBPassword();
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
+        $query = "SELECT admin FROM \"user\" WHERE id = '$id';";
+        $result = pg_query($connection, $query);
+        $row = pg_fetch_assoc($result);
+        if ($row){
+            if ($row['admin'] == 't'){
+                return true;
+            }
+        }
+        return false;
     }
 
     public static function findTankSensors($id){

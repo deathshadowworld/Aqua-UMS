@@ -9,6 +9,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 use app\models\DBHandler;
 class AdminController extends Controller
 {
@@ -158,26 +159,7 @@ class AdminController extends Controller
         }
     }
 
-    public function actionSensor(){
-        $sensor_id = $_GET["sensor_id"];
-        $time_taken = $_GET["time_taken"];
-        #$info["ph"];
-        #$info["do"];
-        #$info["salinity"];
-        #$info["ammonia"];
-        #$info["nitrate"];
-        #$info["turbidity"];
-        #$info["temp"];
-        #$info["depth"];
-        #$info["type"];
-        #info["username"]; #for admin rights
-        
-        #$content = var_dump($_GET);
-        return $this->renderContent($sensor_id." ".$time_taken);    
-    }
 
-    public function actionLog($info){
-        return "log not added";
-    }
+
 
 }

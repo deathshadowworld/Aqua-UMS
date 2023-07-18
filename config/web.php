@@ -15,6 +15,9 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '13wuOX3PTCpAg_NZ99UnwU-PA6ILULEj',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -66,8 +69,12 @@ $config = [
                 'admin/appoint/<id:\d+>' => 'admin/appoint',
                 'admin/revoke/<id:\d+>' => 'admin/revoke',
                 'admin/delete/<id:\d+>' => 'admin/delete',
-                'admin/api/add-sensor' => 'admin/sensor',
-                'admin/api/add-log/<info>' => 'admin/log',
+                'api/add-sensor' => 'api/add-sensor',
+                'api/add-log' => 'api/add-log',
+
+                #'admin/api/add-sensor' => 'admin/sensor',
+                #'admin/api/add-log/<info>' => 'admin/log',
+                #'admin/api/csrf-token' => 'admin/csrf-token',
             ],
         ],
     ],

@@ -9,3 +9,6 @@ if __name__ == "__main__":
         print(url_value)
     else:
         print("Please provide a URL argument.")
+
+print(".env updated at:")
+print("Sensor ID: "+str(123))

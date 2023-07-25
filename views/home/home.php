@@ -29,7 +29,13 @@ $loglist = DBHandler::findSensorLogs($id);
 $sensorlist = $loglist['sensor_ids'];
 unset($loglist['sensor_ids']);
 $sensor1 = $loglist[0];
-$sensor2 = $loglist[1];
+
+if ($id != '0'){
+    $sensor2 = $loglist[0];
+}else {
+    $sensor2 = $loglist[1];
+}
+
 $type1 = array();
 foreach($sensor1 as $each){
     $type1[$each['time_taken']] = [
@@ -66,6 +72,8 @@ $dep2 = array_column($type2, 'depth');
 $dep1 = end($dep1);
 $dep2 = end($dep2);
 $status = true;
+
+
 }
 
 catch(Exception $e){
@@ -360,7 +368,7 @@ const ch_sal = new Chart(cv_sal, {
         },
         scales: {
             x: {
-                max: 14,
+                max: 7,
                 min: 1,
                 stepSize: 1,
             },

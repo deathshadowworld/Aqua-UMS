@@ -280,11 +280,11 @@ $message = DBHandler::sortedMessages($id);
         }); 
 
 
-const do_chartlabel = <?= json_encode(array_keys($type1))?>;
+const do_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
 const do_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-const do_data1 = <?= json_encode(array_column($type1, 'do'))?>;
+const do_data1 = <?= json_encode(array_column($type1, 'do'))?>.slice(-6);
 const do_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-const do_data2 = <?= json_encode(array_column($type2, 'do'))?>;            
+const do_data2 = <?= json_encode(array_column($type2, 'do'))?>.slice(-6);            
 
 const cv_do = document.getElementById('cv_do');
 const ch_do = new Chart(cv_do, {
@@ -331,11 +331,11 @@ const ch_do = new Chart(cv_do, {
 });
 
 
-const sal_chartlabel = <?= json_encode(array_keys($type1))?>;
+const sal_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
 const sal_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-const sal_data1 = <?= json_encode(array_column($type1, 'salinity'))?>;
+const sal_data1 = <?= json_encode(array_column($type1, 'salinity'))?>.slice(-6);
 const sal_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-const sal_data2 = <?= json_encode(array_column($type2, 'salinity'))?>;            
+const sal_data2 = <?= json_encode(array_column($type2, 'salinity'))?>.slice(-6);            
 
 const cv_sal = document.getElementById('cv_sal');
 const ch_sal = new Chart(cv_sal, {
@@ -383,11 +383,11 @@ const ch_sal = new Chart(cv_sal, {
 
 
 
-const amm_chartlabel = <?= json_encode(array_keys($type1))?>;
+const amm_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
 const amm_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-const amm_data1 = <?= json_encode(array_column($type1, 'ammonia'))?>;
+const amm_data1 = <?= json_encode(array_column($type1, 'ammonia'))?>.slice(-6);
 const amm_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-const amm_data2 = <?= json_encode(array_column($type2, 'ammonia'))?>;            
+const amm_data2 = <?= json_encode(array_column($type2, 'ammonia'))?>.slice(-6);            
 
 const cv_amm = document.getElementById('cv_amm');
 const ch_amm = new Chart(cv_amm, {
@@ -434,11 +434,11 @@ const ch_amm = new Chart(cv_amm, {
 });
 
 
-const nit_chartlabel = <?= json_encode(array_keys($type1))?>;
+const nit_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
 const nit_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-const nit_data1 = <?= json_encode(array_column($type1, 'nitrate'))?>;
+const nit_data1 = <?= json_encode(array_column($type1, 'nitrate'))?>.slice(-6);
 const nit_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-const nit_data2 = <?= json_encode(array_column($type2, 'nitrate'))?>;            
+const nit_data2 = <?= json_encode(array_column($type2, 'nitrate'))?>.slice(-6);            
 
 const cv_nit = document.getElementById('cv_nit');
 const ch_nit = new Chart(cv_nit, {
@@ -485,11 +485,11 @@ const ch_nit = new Chart(cv_nit, {
 });
 
 
-const tur_chartlabel = <?= json_encode(array_keys($type1))?>;
+const tur_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
 const tur_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-const tur_data1 = <?= json_encode(array_column($type1, 'turbidity'))?>;
+const tur_data1 = <?= json_encode(array_column($type1, 'turbidity'))?>.slice(-6);
 const tur_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-const tur_data2 = <?= json_encode(array_column($type2, 'turbidity'))?>;            
+const tur_data2 = <?= json_encode(array_column($type2, 'turbidity'))?>.slice(-6);            
 
 const cv_tur = document.getElementById('cv_tur');
 const ch_tur = new Chart(cv_tur, {
@@ -536,11 +536,11 @@ const ch_tur = new Chart(cv_tur, {
 });
 
 
-const temp_chartlabel = <?= json_encode(array_keys($type1))?>;
+const temp_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
 const temp_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-const temp_data1 = <?= json_encode(array_column($type1, 'temp'))?>;
+const temp_data1 = <?= json_encode(array_column($type1, 'temp'))?>.slice(-6);
 const temp_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-const temp_data2 = <?= json_encode(array_column($type2, 'temp'))?>;            
+const temp_data2 = <?= json_encode(array_column($type2, 'temp'))?>.slice(-6);            
 
 const cv_temp = document.getElementById('cv_temp');
 const ch_temp = new Chart(cv_temp, {
@@ -587,11 +587,11 @@ const ch_temp = new Chart(cv_temp, {
 });
 
 
-const dep_chartlabel = <?= json_encode(array_keys($type1))?>;
+const dep_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-1);
 const dep_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-const dep_data1 = <?= json_encode($dep1)?>;
+const dep_data1 = <?= json_encode($dep1)?>.slice(-1);
 const dep_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-const dep_data2 = <?= json_encode($dep2)?>;            
+const dep_data2 = <?= json_encode($dep2)?>.slice(-1);            
 
 const cv_dep1 = document.getElementById('cv_bar1');
 const ch_dep1 = new Chart(cv_dep1, {

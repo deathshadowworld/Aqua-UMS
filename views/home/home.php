@@ -266,13 +266,13 @@ $message = DBHandler::sortedMessages($id);
                 },
                 scales: {
                     x: {
-                        max: 7,
+                        max: 5,
                         min: 0,
                         stepSize: 1,
                     },
                     y: {
-                        max: 9,
-                        min: 6,
+                        max: 14,
+                        min: 1,
                         stepSize: 0.1,
                     }
                 },
@@ -317,7 +317,7 @@ const ch_do = new Chart(cv_do, {
         },
         scales: {
             x: {
-                max: 7,
+                max: 5,
                 min: 0,
                 stepSize: 1,
             },
@@ -368,7 +368,7 @@ const ch_sal = new Chart(cv_sal, {
         },
         scales: {
             x: {
-                max: 7,
+                max: 5,
                 min: 0,
                 stepSize: 1,
             },
@@ -420,7 +420,7 @@ const ch_amm = new Chart(cv_amm, {
         },
         scales: {
             x: {
-                max: 7,
+                max: 5,
                 min: 0,
                 stepSize: 1,
             },
@@ -471,7 +471,7 @@ const ch_nit = new Chart(cv_nit, {
         },
         scales: {
             x: {
-                max: 7,
+                max: 5,
                 min: 0,
                 stepSize: 1,
             },
@@ -522,7 +522,7 @@ const ch_tur = new Chart(cv_tur, {
         },
         scales: {
             x: {
-                max: 7,
+                max: 5,
                 min: 0,
                 stepSize: 1,
             },
@@ -573,7 +573,7 @@ const ch_temp = new Chart(cv_temp, {
         },
         scales: {
             x: {
-                max: 7,
+                max: 5,
                 min: 0,
                 stepSize: 1,
             },

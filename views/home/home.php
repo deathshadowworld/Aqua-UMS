@@ -266,8 +266,8 @@ $message = DBHandler::sortedMessages($id);
                 },
                 scales: {
                     x: {
-                        max: 14,
-                        min: 1,
+                        max: 7,
+                        min: 0,
                         stepSize: 1,
                     },
                     y: {
@@ -317,8 +317,8 @@ const ch_do = new Chart(cv_do, {
         },
         scales: {
             x: {
-                max: 14,
-                min: 1,
+                max: 7,
+                min: 0,
                 stepSize: 1,
             },
             y: {
@@ -369,7 +369,7 @@ const ch_sal = new Chart(cv_sal, {
         scales: {
             x: {
                 max: 7,
-                min: 1,
+                min: 0,
                 stepSize: 1,
             },
             y: {
@@ -420,8 +420,8 @@ const ch_amm = new Chart(cv_amm, {
         },
         scales: {
             x: {
-                max: 14,
-                min: 1,
+                max: 7,
+                min: 0,
                 stepSize: 1,
             },
             y: {
@@ -471,8 +471,8 @@ const ch_nit = new Chart(cv_nit, {
         },
         scales: {
             x: {
-                max: 14,
-                min: 1,
+                max: 7,
+                min: 0,
                 stepSize: 1,
             },
             y: {
@@ -522,8 +522,8 @@ const ch_tur = new Chart(cv_tur, {
         },
         scales: {
             x: {
-                max: 14,
-                min: 1,
+                max: 7,
+                min: 0,
                 stepSize: 1,
             },
             y: {
@@ -573,8 +573,8 @@ const ch_temp = new Chart(cv_temp, {
         },
         scales: {
             x: {
-                max: 14,
-                min: 1,
+                max: 7,
+                min: 0,
                 stepSize: 1,
             },
             y: {
@@ -616,7 +616,7 @@ const ch_dep1 = new Chart(cv_dep1, {
         },
         scales: {
             x: {
-                max: 10,
+                max: 1,
                 min: 1,
                 stepSize: 1,
             },
@@ -653,7 +653,7 @@ const ch_dep2 = new Chart(cv_dep2, {
         },
         scales: {
             x: {
-                max: 14,
+                max: 1,
                 min: 1,
                 stepSize: 1,
             },

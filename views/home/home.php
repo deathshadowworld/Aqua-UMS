@@ -225,9 +225,10 @@ $message = DBHandler::sortedMessages($id);
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.1/chart.min.js"></script>
     
-<script>
+
 
 <?php if ($status == true) { ?>
+<script>    
         const ph_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
         const ph_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
         const ph_data1 = <?= json_encode(array_column($type1, 'ph'))?>.slice(-6);
@@ -697,7 +698,8 @@ var donutChart = new Chart(ch_main, {
 
 document.getElementById('mainright').innerHTML = `Fish Tank</br><b style="font-size: 40px;">${fishTankQuality}%</b>`;
 document.getElementById('mainleft').innerHTML = `Biofilter</br><b style="font-size: 40px;">${bioFilterQuality}%</b>`;
-<?php } ?>
+
     </script>
+    <?php } ?>
 </body>
 </html>

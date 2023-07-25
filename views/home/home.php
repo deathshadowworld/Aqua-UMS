@@ -229,7 +229,7 @@ $message = DBHandler::sortedMessages($id);
 <script>
 
 <?php if ($status) { ?>
-        const ph_chartlabel = <?= json_encode(array_keys($type1))?>;
+        const ph_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
         const ph_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
         const ph_data1 = <?= json_encode(array_column($type1, 'ph'))?>;
         const ph_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";

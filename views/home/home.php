@@ -71,7 +71,12 @@ $dep1 = array_column($type1, 'depth');
 $dep2 = array_column($type2, 'depth');
 $dep1 = end($dep1);
 $dep2 = end($dep2);
-$status = true;
+if (count($keytype1) < 2){
+    $status = false;
+}else {
+   $status = true; 
+}
+
 
 }
 
@@ -227,7 +232,7 @@ $message = DBHandler::sortedMessages($id);
     
 
 
-<?php if ($status == true) { ?>
+<?php if ($status) { ?>
 <script>    
         const ph_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
         const ph_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";

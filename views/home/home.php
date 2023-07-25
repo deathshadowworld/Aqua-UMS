@@ -231,9 +231,9 @@ $message = DBHandler::sortedMessages($id);
 <?php if ($status) { ?>
         const ph_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
         const ph_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-        const ph_data1 = <?= json_encode(array_column($type1, 'ph'))?>;
+        const ph_data1 = <?= json_encode(array_column($type1, 'ph'))?>.slice(-6);
         const ph_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
-        const ph_data2 = <?= json_encode(array_column($type2, 'ph'))?>;            
+        const ph_data2 = <?= json_encode(array_column($type2, 'ph'))?>.slice(-6);            
 
         const cv_ph = document.getElementById('cv_ph');
         const ch_ph = new Chart(cv_ph, {

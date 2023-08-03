@@ -95,18 +95,18 @@ $message = DBHandler::sortedMessages($id);
     <style>
         
 
+
     </style>
     
 </head>
 <body>
-
-    <div style="height:10vh; width:98vw;">
-        <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821207343374417/LOGO_UMS_putih.png" style="max-height: 9vh;" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';"></span>
-        <span class="header"><b style="font-size: 30px;">Aqua UMS Project</b></br>Kerjasama Fakulti Komputeran dan Informatik dan Institut Penyelidikan Marin Borneo</span>
-        <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821361966387350/EcoCampus-Putih.png" style="max-height: 9vh;"></span>
-    </div>
-
-    <div class="" style="" id="monitorwindow">
+    <div class="desktop-view">
+        <div style="height:10vh; width:98vw;">
+            <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821207343374417/LOGO_UMS_putih.png" style="max-height: 9vh;" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';"></span>
+            <span class="header"><b style="font-size: 30px;">Aqua UMS Project</b></br>Kerjasama Fakulti Komputeran dan Informatik dan Institut Penyelidikan Marin Borneo</span>
+            <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821361966387350/EcoCampus-Putih.png" style="max-height: 9vh;"></span>
+        </div>
+        <div class="" style="" id="monitorwindow">
     <div class="grid-container" style=" margin-bottom: 50px;">
         <div class="grid-item"></div>
 
@@ -218,6 +218,7 @@ $message = DBHandler::sortedMessages($id);
         
         <!--  -->
     </div> 
+    
 
 
     <div class="bottomleftnav" id="navbuttons">
@@ -225,6 +226,145 @@ $message = DBHandler::sortedMessages($id);
         <div id="homebutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';">Home</div>
         <div id="profilebutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/profile';">Profile</div>
         <div id="logoutbutton" class="logout" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/logout';">Logout</div>
+    </div>
+
+
+
+    </div>
+
+    <div class="mobile-view">
+    <div style="height:10vh; width:92vw;">
+            <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821207343374417/LOGO_UMS_putih.png" style="max-height: 9vh;" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';"></span>
+            <span class="header"></span>
+            <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821361966387350/EcoCampus-Putih.png" style="max-height: 9vh;"></span>
+        </div>
+        <div style="height:10vh; width:92vw;">
+            <span class="header" style="width: 100%;"><b style="font-size: 30px;">Aqua UMS Project</b></br>Kerjasama Fakulti Komputeran dan Informatik dan Institut Penyelidikan Marin Borneo</span>
+            
+        </div>
+    <div class="" style="" id="monitorwindow">
+        <div class="grid-container" style=" margin-bottom: 50px;">
+        <div class="grid-item widget tank-widget" id="infodiv"><u>Tank Info</u></br></br>
+                <span style="position: absolute; top: 80%; right:30%; width: 40%;padding: 4px;">
+                    <select style="width: 200px;" id="sel_displaytank">
+                    <?php
+                        foreach ($tanklist as $each){
+                            echo "<option value='".$each['id']."'>".$each['name']."</option>";
+                        }
+                    ?>
+                    </select>
+                </span>
+                Tank Name: <?= $tank['name'] ?> </br>
+                Content: <?= $tank['desc'] ?></br>
+                Location: <?= $tank['location'] ?>
+                <script>
+                    const tankOption = document.getElementById('sel_displaytank');
+                    tankOption.value = <?= $tank['id'] ?>;
+                    tankOption.addEventListener('change', function() {
+                        const selectTankId = tankOption.value;
+                        location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home?tank_id='+selectTankId;
+                    });
+
+                </script>
+            </div>
+            <div class="grid-item widget main-widget" style="position: relative;" id="scorediv">Water Quality Score
+                <canvas id="mainChart" style="max-height: 450px;"></canvas>
+                <span class="scoreleft" id="mainleft">Fish Tank</br><b style="font-size: 40px;">N/A%</b></span>
+                <span class="scoreright" id="mainright">Biofilter</br><b style="font-size: 40px;">N/A%</b></span>
+            </div>
+
+            <div class="grid-item widget mini-widget" id="phdiv">pH Level<canvas id="cv_ph"></canvas></div>
+
+            <div class="grid-item widget mini-widget" id="dodiv">Dissolved Oxygen<canvas id="cv_do"></canvas></div>
+
+            <div class="grid-item widget mini-widget " id="sadiv">Salinity<canvas id="cv_sal"></canvas></div>
+
+            <div class="grid-item small-widget widget" id="depthtankdiv">Fish Tank Depth<canvas id="cv_bar1" style="max-height: 250px;"></canvas></div>
+
+            <div class="grid-item small-widget widget" id="depthfilterdiv">Biofilter Depth<canvas id="cv_bar2" style="max-height: 250px;"></canvas></div>
+
+            <div class="grid-item widget mini-widget " id="amdiv">Ammonia<canvas id="cv_amm"></canvas></div>
+
+            
+
+            <div class="grid-item widget mini-widget" id="tudiv">Turbidity<canvas id="cv_tur"></canvas></div>
+
+            <div class="grid-item widget mini-widget " id="nidiv">Nitrate<canvas id="cv_nit"></canvas></div>
+
+            <div class="grid-item widget temp-widget " id="tempdiv">Temperature<canvas style="max-height: 175px;" id="cv_temp"></canvas></div>
+            
+        </div>
+    
+
+        <div class="grid-container">
+            <div class="grid-item widget messagetitle">Warnings</div>
+            
+            <div class="grid-item widget messagecontent">
+                <table>
+                    <tr>
+                        <th style="width:50px;">#</th>
+                        <th style="width:300px;">Warning</th>
+                        <th style="width:150px;">Timestamp</th>
+                    </tr>
+                    <?php
+                        foreach ($message['warning'] as $each){
+                            echo '<tr><td>'.$each['message_id'].'</td>';
+                            echo '<td>'.$each['content'].'</td>';
+                            echo '<td>'.$each['time_posted'].'</td></tr>';
+                        }
+                        ?>
+
+                </table>
+            </div>
+
+            <div class="grid-item widget messagetitle">Sensor Log</div>
+            <div class="grid-item widget messagecontent">
+                <table>
+                    <tr>
+                        <th style="width:50px;">#</th>
+                        <th style="width:300px;">Sensor Log</th>
+                        <th style="width:150px;">Timestamp</th>
+                    </tr>
+                    <?php
+                        foreach ($message['sensor'] as $each){
+                            echo '<tr><td>'.$each['message_id'].'</td>';
+                            echo '<td>'.$each['content'].'</td>';
+                            echo '<td>'.$each['time_posted'].'</td></tr>';
+                        }
+                        ?>
+
+                </table>
+            </div>
+            
+            <div class="grid-item widget messagetitle">Forecasts</div>
+            <div class="grid-item widget messagecontent">
+                <table>
+                    <tr>
+                        <th style="width:50px;">#</th>
+                        <th style="width:300px;">Forecasts</th>
+                        <th style="width:150px;">Timestamp</th>
+                    </tr>
+                        <?php
+                        foreach ($message['forecast'] as $each){
+                            echo '<tr><td>'.$each['message_id'].'</td>';
+                            echo '<td>'.$each['content'].'</td>';
+                            echo '<td>'.$each['time_posted'].'</td></tr>';
+                        }
+                        ?>
+
+                </table>
+            </div>
+        </div>
+    
+        <!--<div id="modalwindow" style="background-color: #000000d7; height: 100vh; width:100vw; position:fixed; top: 0;right: 0; display: none; z-index: 3; ">
+            <div class="widget-modal">
+                Chart
+                <canvas id="chart2"></canvas>
+            </div>
+        </div>-->
+        
+        <!--  -->
+    </div> 
     </div>
     
 

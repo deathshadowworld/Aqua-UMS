@@ -633,7 +633,7 @@ class DBHandler
         $query = "INSERT INTO \"message\" (message_id,type,tank_id,time_posted,content) VALUES 
         ($mid,  0, $id, NOW(), 'Warning Content'),
         ($mid2, 1, $id, NOW(), 'Sensor Content'),
-        ($mid3, 2, $id, NOW(), 'TForecast Content')";
+        ($mid3, 2, $id, NOW(), 'Forecast Content')";
         pg_query ($connection, $query);
 
         
@@ -674,6 +674,7 @@ class DBHandler
         $dep = $new['dep'];
         $type = $new['type'];
         $id = self::generateLogID();
+        $tank_id = self::findTankforSensor($sensor_id);
         #####
         $host = 'satao.db.elephantsql.com';
         $port = '5432';
@@ -684,6 +685,10 @@ class DBHandler
         $query = "INSERT INTO \"waterlog\" (log_id,sensor_id,time_taken,\"pH\",\"Do\",salinity,ammonia, nitrate, turbidity,temp,depth,type) VALUES 
         (".$id.",'".$sensor_id."','".$datetime."','".$ph."','".$do."','".$sal."','".$amm."','".$nit."','".$tur."','".$temp."','".$dep."','".$type."');";
         $result = pg_query($connection, $query);
+        $query = "INSERT INTO \"message\" (message_id,type,tank_id,time_posted,content) VALUES 
+        ($id,  1, $tank_id, NOW(), 'Data is collected.')";
+        pg_query ($connection, $query);
+
         pg_close($connection);
         return $result;
     }
@@ -694,6 +699,23 @@ class DBHandler
     #                           #
     #                           #
     #############################
+
+public static function findTankforSensor($value){
+    #####
+    $host = 'satao.db.elephantsql.com';
+    $port = '5432';
+    $dbname = 'dxtshkjc';
+    $dbusername = 'dxtshkjc';
+    $password = self::getDBPassword();
+    $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+    #####
+    $query = "SELECT tank_id FROM \"sensor\" WHERE sensor_id = '$value';";
+        $result = pg_query($connection, $query);
+        $row = pg_fetch_assoc($result);
+        pg_close($connection);
+        return $row['tank_id'];
+}
+
     public static function findUser($value) {
         #####
         $host = 'satao.db.elephantsql.com';

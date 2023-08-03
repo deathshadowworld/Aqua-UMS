@@ -258,11 +258,11 @@ $message = DBHandler::sortedMessages($id);
                 Content: <?= $tank['desc'] ?></br>
                 Location: <?= $tank['location'] ?>
                 <script>
-                    const tankOption = document.getElementById('m_sel_displaytank');
-                    tankOption.value = <?= $tank['id'] ?>;
-                    tankOption.addEventListener('change', function() {
-                        const selectTankId = tankOption.value;
-                        location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home?tank_id='+selectTankId;
+                    const m_tankOption = document.getElementById('m_sel_displaytank');
+                    m_tankOption.value = <?= $tank['id'] ?>;
+                    m_tankOption.addEventListener('change', function() {
+                        const m_selectTankId = m_tankOption.value;
+                        location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home?tank_id='+m_selectTankId;
                     });
 
                 </script>
@@ -1145,9 +1145,38 @@ var donutChart = new Chart(ch_main, {
     }
 });
 
+var m_ch_main = document.getElementById('m_mainChart').getContext('2d');
+var m_donutChart = new Chart(m_ch_main, {
+    type: 'doughnut',
+    data: {
+        labels: ["Water Quality Percentage", ""], // Labels for the pie charts
+        datasets: [{
+            data: [fishTankQuality,100-fishTankQuality], // Values for the first pie chart (percentages)
+            backgroundColor: ["#00bfff33", "#aaaaaa00"], // Colors for the first pie chart slices
+            borderWidth: 1, // Border width of the first pie chart slices
+            borderColor: "#00b2ff" // Border color of the first pie chart slices
+        }, {
+            data: [bioFilterQuality,100-bioFilterQuality], // Values for the second pie chart (percentages)
+            backgroundColor: ["#f700ff2c", "#aaaaaa00"], // Colors for the second pie chart slices
+            borderWidth: 1, // Border width of the second pie chart slices
+            borderColor: "#f700ff" // Border color of the second pie chart slices
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+                legend: {
+                    display: false,
+                }
+            },
+    }
+});
+
+document.getElementById('m_mainright').innerHTML = `Fish Tank</br><b style="font-size: 40px;">${fishTankQuality}%</b>`;
+document.getElementById('m_mainleft').innerHTML = `Biofilter</br><b style="font-size: 40px;">${bioFilterQuality}%</b>`;
 document.getElementById('mainright').innerHTML = `Fish Tank</br><b style="font-size: 40px;">${fishTankQuality}%</b>`;
 document.getElementById('mainleft').innerHTML = `Biofilter</br><b style="font-size: 40px;">${bioFilterQuality}%</b>`;
-
     </script>
     <?php } ?>
 </body>

@@ -242,11 +242,11 @@ $message = DBHandler::sortedMessages($id);
             <span class="header" style="width: 100%;"><b style="font-size: 30px;">Aqua UMS Project</b></br>Kerjasama Fakulti Komputeran dan Informatik dan Institut Penyelidikan Marin Borneo</span>
             
         </div>
-    <div class="" style="" id="monitorwindow">
+    <div class="" style="" id="m_monitorwindow">
         <div class="grid-container" style=" margin-bottom: 50px;">
-        <div class="grid-item widget tank-widget" id="infodiv"><u>Tank Info</u></br></br>
+        <div class="grid-item widget tank-widget" id="m_infodiv"><u>Tank Info</u></br></br>
                 <span style="position: absolute; top: 80%; right:30%; width: 40%;padding: 4px;">
-                    <select style="width: 200px;" id="sel_displaytank">
+                    <select style="width: 200px;" id="m_sel_displaytank">
                     <?php
                         foreach ($tanklist as $each){
                             echo "<option value='".$each['id']."'>".$each['name']."</option>";
@@ -258,7 +258,7 @@ $message = DBHandler::sortedMessages($id);
                 Content: <?= $tank['desc'] ?></br>
                 Location: <?= $tank['location'] ?>
                 <script>
-                    const tankOption = document.getElementById('sel_displaytank');
+                    const tankOption = document.getElementById('m_sel_displaytank');
                     tankOption.value = <?= $tank['id'] ?>;
                     tankOption.addEventListener('change', function() {
                         const selectTankId = tankOption.value;
@@ -267,31 +267,29 @@ $message = DBHandler::sortedMessages($id);
 
                 </script>
             </div>
-            <div class="grid-item widget main-widget" style="position: relative;" id="scorediv">Water Quality Score
-                <canvas id="mainChart" style="max-height: 450px;"></canvas>
-                <span class="scoreleft" id="mainleft">Fish Tank</br><b style="font-size: 40px;">N/A%</b></span>
-                <span class="scoreright" id="mainright">Biofilter</br><b style="font-size: 40px;">N/A%</b></span>
+            <div class="grid-item widget main-widget" style="position: relative;" id="m_scorediv">Water Quality Score
+                <canvas id="m_mainChart" style="max-height: 450px;"></canvas>
+                <span class="scoreleft" id="m_mainleft">Fish Tank</br><b style="font-size: 40px;">N/A%</b></span>
+                <span class="scoreright" id="m_mainright">Biofilter</br><b style="font-size: 40px;">N/A%</b></span>
             </div>
 
-            <div class="grid-item widget mini-widget" id="phdiv">pH Level<canvas id="cv_ph"></canvas></div>
+            <div class="grid-item widget mini-widget" id="m_phdiv">pH Level<canvas id="m_cv_ph"></canvas></div>
 
-            <div class="grid-item widget mini-widget" id="dodiv">Dissolved Oxygen<canvas id="cv_do"></canvas></div>
+            <div class="grid-item widget mini-widget" id="m_dodiv">Dissolved Oxygen<canvas id="m_cv_do"></canvas></div>
 
-            <div class="grid-item widget mini-widget " id="sadiv">Salinity<canvas id="cv_sal"></canvas></div>
+            <div class="grid-item widget mini-widget " id="m_sadiv">Salinity<canvas id="m_cv_sal"></canvas></div>
 
-            <div class="grid-item small-widget widget" id="depthtankdiv">Fish Tank Depth<canvas id="cv_bar1" style="max-height: 250px;"></canvas></div>
+            <!--<div class="grid-item small-widget widget" id="m_depthtankdiv">Fish Tank Depth<canvas id="m_cv_bar1" style="max-height: 250px;"></canvas></div>
 
-            <div class="grid-item small-widget widget" id="depthfilterdiv">Biofilter Depth<canvas id="cv_bar2" style="max-height: 250px;"></canvas></div>
+            <div class="grid-item small-widget widget" id="m_depthfilterdiv">Biofilter Depth<canvas id="m_cv_bar2" style="max-height: 250px;"></canvas></div>-->
 
-            <div class="grid-item widget mini-widget " id="amdiv">Ammonia<canvas id="cv_amm"></canvas></div>
+            <div class="grid-item widget mini-widget " id="m_amdiv">Ammonia<canvas id="m_cv_amm"></canvas></div>
 
-            
+            <div class="grid-item widget mini-widget" id="m_tudiv">Turbidity<canvas id="m_cv_tur"></canvas></div>
 
-            <div class="grid-item widget mini-widget" id="tudiv">Turbidity<canvas id="cv_tur"></canvas></div>
+            <div class="grid-item widget mini-widget " id="m_nidiv">Nitrate<canvas id="m_cv_nit"></canvas></div>
 
-            <div class="grid-item widget mini-widget " id="nidiv">Nitrate<canvas id="cv_nit"></canvas></div>
-
-            <div class="grid-item widget temp-widget " id="tempdiv">Temperature<canvas style="max-height: 175px;" id="cv_temp"></canvas></div>
+            <div class="grid-item widget temp-widget " id="m_tempdiv">Temperature<canvas style="max-height: 175px;" id="m_cv_temp"></canvas></div>
             
         </div>
     
@@ -424,6 +422,50 @@ $message = DBHandler::sortedMessages($id);
             }
         }); 
 
+        const m_cv_ph = document.getElementById('m_cv_ph');
+        const m_ch_ph = new Chart(m_cv_ph, {
+            type: 'line',
+            data:{
+                labels: ph_chartlabel,      //generate label array timestamp log
+                datasets:[{
+                    label:ph_data1label,   //Sensor type or name
+                    data: ph_data1,   //timestamp pair of data
+                    backgroundColor: '#00bfff33',
+                    borderColor: '#00b2ff',
+                    borderWidth: 2,
+                    fill: true   
+                },{
+                    label: ph_data2label,
+                    data: ph_data2,
+                    backgroundColor: '#f700ff2c',
+                    borderColor: '#f700ff',
+                    borderWidth: 2,
+                    fill: true
+                }
+            ]},
+            options:{
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                    }
+                },
+                scales: {
+                    x: {
+                        max: 5,
+                        min: 0,
+                        stepSize: 1,
+                    },
+                    y: {
+                        max: 14,
+                        min: 1,
+                        stepSize: 0.1,
+                    }
+                },
+            }
+        });
+
 
 const do_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
 const do_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
@@ -474,7 +516,49 @@ const ch_do = new Chart(cv_do, {
         },
     }
 });
-
+const m_cv_do = document.getElementById('m_cv_do');
+const m_ch_do = new Chart(m_cv_do, {
+    type: 'line',
+    data:{
+        labels: do_chartlabel,      //generate label array timestamp log
+        datasets:[{
+            label:do_data1label,   //Sensor type or name
+            data: do_data1,   //timestamp pair of data
+            backgroundColor: '#00bfff33',
+            borderColor: '#00b2ff',
+            borderWidth: 2,
+            fill: true   
+        },{
+            label: do_data2label,
+            data: do_data2,
+            backgroundColor: '#f700ff2c',
+            borderColor: '#f700ff',
+            borderWidth: 2,
+            fill: true
+        }
+    ]},
+    options:{
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                display: true,
+            }
+        },
+        scales: {
+            x: {
+                max: 5,
+                min: 0,
+                stepSize: 1,
+            },
+            y: {
+                max: 100,
+                min: 0,
+                stepSize: 0.1,
+            }
+        },
+    }
+});
 
 const sal_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
 const sal_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
@@ -484,6 +568,50 @@ const sal_data2 = <?= json_encode(array_column($type2, 'salinity'))?>.slice(-6);
 
 const cv_sal = document.getElementById('cv_sal');
 const ch_sal = new Chart(cv_sal, {
+    type: 'line',
+    data:{
+        labels: sal_chartlabel,      //generate label array timestamp log
+        datasets:[{
+            label:sal_data1label,   //Sensor type or name
+            data: sal_data1,   //timestamp pair of data
+            backgroundColor: '#00bfff33',
+            borderColor: '#00b2ff',
+            borderWidth: 2,
+            fill: true   
+        },{
+            label: sal_data2label,
+            data: sal_data2,
+            backgroundColor: '#f700ff2c',
+            borderColor: '#f700ff',
+            borderWidth: 2,
+            fill: true
+        }
+    ]},
+    options:{
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                display: true,
+            }
+        },
+        scales: {
+            x: {
+                max: 5,
+                min: 0,
+                stepSize: 1,
+            },
+            y: {
+                max: 50,
+                min: 0,
+                stepSize: 0.1,
+            }
+        },
+    }
+});
+
+const m_cv_sal = document.getElementById('m_cv_sal');
+const m_ch_sal = new Chart(m_cv_sal, {
     type: 'line',
     data:{
         labels: sal_chartlabel,      //generate label array timestamp log
@@ -578,6 +706,50 @@ const ch_amm = new Chart(cv_amm, {
     }
 });
 
+const m_cv_amm = document.getElementById('m_cv_amm');
+const m_ch_amm = new Chart(m_cv_amm, {
+    type: 'line',
+    data:{
+        labels: amm_chartlabel,      //generate label array timestamp log
+        datasets:[{
+            label:amm_data1label,   //Sensor type or name
+            data: amm_data1,   //timestamp pair of data
+            backgroundColor: '#00bfff33',
+            borderColor: '#00b2ff',
+            borderWidth: 2,
+            fill: true   
+        },{
+            label: amm_data2label,
+            data: amm_data2,
+            backgroundColor: '#f700ff2c',
+            borderColor: '#f700ff',
+            borderWidth: 2,
+            fill: true
+        }
+    ]},
+    options:{
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                display: true,
+            }
+        },
+        scales: {
+            x: {
+                max: 5,
+                min: 0,
+                stepSize: 1,
+            },
+            y: {
+                max: 20,
+                min: 0,
+                stepSize: 0.1,
+            }
+        },
+    }
+});
+
 
 const nit_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
 const nit_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
@@ -629,6 +801,49 @@ const ch_nit = new Chart(cv_nit, {
     }
 });
 
+const m_cv_nit = document.getElementById('m_cv_nit');
+const m_ch_nit = new Chart(m_cv_nit, {
+    type: 'line',
+    data:{
+        labels: nit_chartlabel,      //generate label array timestamp log
+        datasets:[{
+            label:nit_data1label,   //Sensor type or name
+            data: nit_data1,   //timestamp pair of data
+            backgroundColor: '#00bfff33',
+            borderColor: '#00b2ff',
+            borderWidth: 2,
+            fill: true   
+        },{
+            label: nit_data2label,
+            data: nit_data2,
+            backgroundColor: '#f700ff2c',
+            borderColor: '#f700ff',
+            borderWidth: 2,
+            fill: true
+        }
+    ]},
+    options:{
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                display: true,
+            }
+        },
+        scales: {
+            x: {
+                max: 5,
+                min: 0,
+                stepSize: 1,
+            },
+            y: {
+                max: 20,
+                min: 0,
+                stepSize: 0.1,
+            }
+        },
+    }
+});
 
 const tur_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
 const tur_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
@@ -638,6 +853,50 @@ const tur_data2 = <?= json_encode(array_column($type2, 'turbidity'))?>.slice(-6)
 
 const cv_tur = document.getElementById('cv_tur');
 const ch_tur = new Chart(cv_tur, {
+    type: 'line',
+    data:{
+        labels: tur_chartlabel,      //generate label array timestamp log
+        datasets:[{
+            label:tur_data1label,   //Sensor type or name
+            data: tur_data1,   //timestamp pair of data
+            backgroundColor: '#00bfff33',
+            borderColor: '#00b2ff',
+            borderWidth: 2,
+            fill: true   
+        },{
+            label: tur_data2label,
+            data: tur_data2,
+            backgroundColor: '#f700ff2c',
+            borderColor: '#f700ff',
+            borderWidth: 2,
+            fill: true
+        }
+    ]},
+    options:{
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                display: true,
+            }
+        },
+        scales: {
+            x: {
+                max: 5,
+                min: 0,
+                stepSize: 1,
+            },
+            y: {
+                max: 10,
+                min: 0,
+                stepSize: 0.1,
+            }
+        },
+    }
+});
+
+const m_cv_tur = document.getElementById('m_cv_tur');
+const m_ch_tur = new Chart(m_cv_tur, {
     type: 'line',
     data:{
         labels: tur_chartlabel,      //generate label array timestamp log
@@ -730,6 +989,51 @@ const ch_temp = new Chart(cv_temp, {
         },
     }
 });
+
+const m_cv_temp = document.getElementById('m_cv_temp');
+const m_ch_temp = new Chart(m_cv_temp, {
+    type: 'line',
+    data:{
+        labels: temp_chartlabel,      //generate label array timestamp log
+        datasets:[{
+            label:temp_data1label,   //Sensor type or name
+            data: temp_data1,   //timestamp pair of data
+            backgroundColor: '#00bfff33',
+            borderColor: '#00b2ff',
+            borderWidth: 2,
+            fill: true   
+        },{
+            label: temp_data2label,
+            data: temp_data2,
+            backgroundColor: '#f700ff2c',
+            borderColor: '#f700ff',
+            borderWidth: 2,
+            fill: true
+        }
+    ]},
+    options:{
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                display: true,
+            }
+        },
+        scales: {
+            x: {
+                max: 5,
+                min: 0,
+                stepSize: 1,
+            },
+            y: {
+                max: 40,
+                min: 10,
+                stepSize: 5,
+            }
+        },
+    }
+});
+
 
 
 const dep_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-1);

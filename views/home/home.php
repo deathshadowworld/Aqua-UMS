@@ -23,18 +23,34 @@ foreach ($tanklist as $each){
 $tank = $request ? $request : $tanklist['0'];
 $id = $tank['id'];
 $status = false;
+
 try {
 
 $loglist = DBHandler::findSensorLogs($id);
 $sensorlist = $loglist['sensor_ids'];
 unset($loglist['sensor_ids']);
 $sensor1 = $loglist[0];
+$sensor2 = 0;
 
-if ($id != '0'){
-    $sensor2 = $loglist[0];
-}else {
+if (count ($sensorlist) == 2){  
+    $sensor_info1 = DBHandler::findSensor($sensorlist[0]['sensor_id']);
+    $sensor_info2 = DBHandler::findSensor($sensorlist[1]['sensor_id']);
     $sensor2 = $loglist[1];
+}elseif (count ($sensorlist) == 1){
+    $sensor_info1 = DBHandler::findSensor($sensorlist[0]['sensor_id']);
+    $sensor_info2 = DBHandler::findSensor($sensorlist[0]['sensor_id']);
+    $sensor2 = $loglist[0];
 }
+else {
+    throw new Exception("Sensor not found");
+}
+
+
+#if ($id != '0'){
+#    $sensor2 = $loglist[0];
+#}else {
+#    $sensor2 = $loglist[1];
+#}
 
 $type1 = array();
 foreach($sensor1 as $each){
@@ -72,16 +88,18 @@ $dep2 = array_column($type2, 'depth');
 $dep1 = end($dep1);
 $dep2 = end($dep2);
 if (count($keytype1) < 2){
+    echo "Tank only has one sensor, therefore the chart is merged.";
     $status = false;
 }else {
    $status = true; 
 }
+$tank_param = DBHandler::findTankParam($id);
 
 
 }
 
 catch(Exception $e){
-    echo "Tank has no sensors or logged data, therefore no data to be displayed.";
+    echo "Tank has no sensors or logged data, therefore no data to be displayed. Error 03";
 }
 $message = DBHandler::sortedMessages($id);
 
@@ -110,17 +128,17 @@ $message = DBHandler::sortedMessages($id);
     <div class="grid-container" style=" margin-bottom: 50px;">
         <div class="grid-item"></div>
 
-        <div class="grid-item widget mini-widget" id="phdiv">pH Level<canvas id="cv_ph"></canvas></div>
+        <div class="grid-item widget mini-widget" id="phdiv" style="border-color:<?php if ($status == true && (end($type1)['ph'] >= $tank_param['ph_min'] && end($type1)['ph'] <= $tank_param['ph_max']) && (end($type2)['ph'] >= $tank_param['ph_min'] && end($type2)['ph'] <= $tank_param['ph_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;">pH Level<canvas id="cv_ph"></canvas></div>
         <div class="grid-item widget main-widget" style="position: relative;" id="scorediv">Water Quality Score
             <canvas id="mainChart" style="max-height: 450px;"></canvas>
-            <span class="scoreleft" id="mainleft">Fish Tank</br><b style="font-size: 40px;">N/A%</b></span>
-            <span class="scoreright" id="mainright">Biofilter</br><b style="font-size: 40px;">N/A%</b></span>
+            <span class="scoreleft" id="mainleft"><?= $sensor_info1['name']?></br><b style="font-size: 40px;">N/A%</b></span>
+            <span class="scoreright" id="mainright"><?= $sensor_info2['name']?></br><b style="font-size: 40px;">N/A%</b></span>
         </div>
-        <div class="grid-item widget mini-widget" id="dodiv">Dissolved Oxygen<canvas id="cv_do"></canvas></div>
-        <div class="grid-item widget mini-widget " id="sadiv">Salinity<canvas id="cv_sal"></canvas></div>
-        <div class="grid-item small-widget widget" id="depthtankdiv">Fish Tank Depth<canvas id="cv_bar1" style="max-height: 250px;"></canvas></div>
-        <div class="grid-item small-widget widget" id="depthfilterdiv">Biofilter Depth<canvas id="cv_bar2" style="max-height: 250px;"></canvas></div>
-        <div class="grid-item widget mini-widget " id="amdiv">Ammonia<canvas id="cv_amm"></canvas></div>
+        <div class="grid-item widget mini-widget" id="dodiv" style="border-color:<?php if ($status == true && (end($type1)['do'] >= $tank_param['do_min'] && end($type1)['do'] <= $tank_param['do_max']) && (end($type2)['do'] >= $tank_param['do_min'] && end($type2)['do'] <= $tank_param['do_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;">Dissolved Oxygen<canvas id="cv_do"></canvas></div>
+        <div class="grid-item widget mini-widget " id="sadiv" style="border-color:<?php if ($status == true && (end($type1)['salinity'] >= $tank_param['salinity_min'] && end($type1)['salinity'] <= $tank_param['salinity_max']) && (end($type2)['salinity'] >= $tank_param['salinity_min'] && end($type2)['salinity'] <= $tank_param['salinity_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;">Salinity<canvas id="cv_sal"></canvas></div>
+        <div class="grid-item small-widget widget" id="depthtankdiv" style="border-color:<?php if ($status == true && (end($type1)['depth'] >= $tank_param['depth_min'] && end($type1)['depth'] <= $tank_param['depth_max']) && (end($type2)['depth'] >= $tank_param['depth_min'] && end($type2)['depth'] <= $tank_param['depth_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;"><?= $sensor_info1['name']?> Depth<canvas id="cv_bar1" style="max-height: 250px;"></canvas></div>
+        <div class="grid-item small-widget widget" id="depthfilterdiv" style="border-color:<?php if (($status == true && end($type1)['depth'] >= $tank_param['depth_min'] && end($type1)['depth'] <= $tank_param['depth_max']) && (end($type2)['depth'] >= $tank_param['depth_min'] && end($type2)['depth'] <= $tank_param['depth_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;"><?= $sensor_info2['name']?> Depth<canvas id="cv_bar2" style="max-height: 250px;"></canvas></div>
+        <div class="grid-item widget mini-widget " id="amdiv" style="border-color:<?php if ($status == true && (end($type1)['ammonia'] >= $tank_param['ammonia_min'] && end($type1)['ammonia'] <= $tank_param['ammonia_max']) && (end($type2)['ammonia'] >= $tank_param['ammonia_min'] && end($type2)['ammonia'] <= $tank_param['ammonia_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;">Ammonia<canvas id="cv_amm"></canvas></div>
         <div class="grid-item widget tank-widget" id="infodiv"><u>Tank Info</u></br></br>
             <span style="position: absolute; top: 0px; right:0px; width: 40%;padding: 4px;">
                 <select style="width: 200px;" id="sel_displaytank">
@@ -145,9 +163,9 @@ $message = DBHandler::sortedMessages($id);
             </script>
         </div>
         <div class="grid-item row-end" style="grid-row: 9;"></div> <!--next line-->
-        <div class="grid-item widget mini-widget" id="tudiv">Turbidity<canvas id="cv_tur"></canvas></div>
-        <div class="grid-item widget mini-widget " id="nidiv">Nitrate<canvas id="cv_nit"></canvas></div>
-        <div class="grid-item widget temp-widget " id="tempdiv">Temperature<canvas style="max-height: 175px;" id="cv_temp"></canvas></div>
+        <div class="grid-item widget mini-widget" id="tudiv" style="border-color:<?php if ($status == true && (end($type1)['turbidity'] >= $tank_param['turbidity_min'] && end($type1)['turbidity'] <= $tank_param['turbidity_max']) && (end($type2)['turbidity'] >= $tank_param['turbidity_min'] && end($type2)['turbidity'] <= $tank_param['turbidity_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;">Turbidity<canvas id="cv_tur"></canvas></div>
+        <div class="grid-item widget mini-widget " id="nidiv" style="border-color:<?php if ($status == true && (end($type1)['nitrate'] >= $tank_param['nitrate_min'] && end($type1)['nitrate'] <= $tank_param['nitrate_max']) && (end($type2)['nitrate'] >= $tank_param['nitrate_min'] && end($type2)['nitrate'] <= $tank_param['nitrate_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;">Nitrate<canvas id="cv_nit"></canvas></div>
+        <div class="grid-item widget temp-widget " id="tempdiv" style="border-color:<?php if ($status == true && (end($type1)['temp'] >= $tank_param['temp_min'] && end($type1)['temp'] <= $tank_param['temp_max']) && (end($type2)['temp'] >= $tank_param['temp_min'] && end($type2)['temp'] <= $tank_param['temp_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;">Temperature<canvas style="max-height: 175px;" id="cv_temp"></canvas></div>
           
     </div>
     
@@ -220,9 +238,9 @@ $message = DBHandler::sortedMessages($id);
     </div> 
     
 
-
+    <?php $sitename = 'http://'.$GLOBALS['HOSTNAME'].':8080/admin'; ?>
     <div class="bottomleftnav" id="navbuttons">
-        <div id="adminbutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/admin';">Admin</div>
+        <?php if (DBHandler::findAdmin() == true) {echo "<div id='adminbutton' class='navicon' onclick='location.href=\"$sitename\";'>Admin</div>";} ?>
         <div id="homebutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';">Home</div>
         <div id="profilebutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/profile';">Profile</div>
         <div id="logoutbutton" class="logout" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/logout';">Logout</div>
@@ -269,27 +287,27 @@ $message = DBHandler::sortedMessages($id);
             </div>
             <div class="grid-item widget main-widget" style="position: relative;" id="m_scorediv">Water Quality Score
                 <canvas id="m_mainChart" style="max-height: 450px;"></canvas>
-                <span class="scoreleft" id="m_mainleft">Fish Tank</br><b style="font-size: 40px;">N/A%</b></span>
-                <span class="scoreright" id="m_mainright">Biofilter</br><b style="font-size: 40px;">N/A%</b></span>
+                <span class="scoreleft" id="m_mainleft"><?= $sensor_info1['name']?></br><b style="font-size: 40px;">N/A%</b></span>
+                <span class="scoreright" id="m_mainright"><?= $sensor_info2['name']?></br><b style="font-size: 40px;">N/A%</b></span>
             </div>
 
-            <div class="grid-item widget mini-widget" id="m_phdiv">pH Level<canvas id="m_cv_ph"></canvas></div>
+            <div class="grid-item widget mini-widget"  id="m_phdiv" style="border-color:<?php if ($status == true && (end($type1)['ph'] >= $tank_param['ph_min'] && end($type1)['ph'] <= $tank_param['ph_max']) && (end($type2)['ph'] >= $tank_param['ph_min'] && end($type2)['ph'] <= $tank_param['ph_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;">pH Level<canvas id="m_cv_ph"></canvas></div>
 
-            <div class="grid-item widget mini-widget" id="m_dodiv">Dissolved Oxygen<canvas id="m_cv_do"></canvas></div>
+            <div class="grid-item widget mini-widget" id="m_dodiv" style="border-color:<?php if ($status == true && (end($type1)['do'] >= $tank_param['do_min'] && end($type1)['do'] <= $tank_param['do_max']) && (end($type2)['do'] >= $tank_param['do_min'] && end($type2)['do'] <= $tank_param['do_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;">Dissolved Oxygen<canvas id="m_cv_do"></canvas></div>
 
-            <div class="grid-item widget mini-widget " id="m_sadiv">Salinity<canvas id="m_cv_sal"></canvas></div>
+            <div class="grid-item widget mini-widget " id="m_sadiv" style="border-color:<?php if ($status == true && (end($type1)['salinity'] >= $tank_param['salinity_min'] && end($type1)['salinity'] <= $tank_param['salinity_max']) && (end($type2)['salinity'] >= $tank_param['salinity_min'] && end($type2)['salinity'] <= $tank_param['salinity_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;">Salinity<canvas id="m_cv_sal"></canvas></div>
 
-            <!--<div class="grid-item small-widget widget" id="m_depthtankdiv">Fish Tank Depth<canvas id="m_cv_bar1" style="max-height: 250px;"></canvas></div>
+            <!--<div class="grid-item small-widget widget" id="m_depthtankdiv"><?= $sensor_info1['name']?> Depth<canvas id="m_cv_bar1" style="max-height: 250px;"></canvas></div>
 
-            <div class="grid-item small-widget widget" id="m_depthfilterdiv">Biofilter Depth<canvas id="m_cv_bar2" style="max-height: 250px;"></canvas></div>-->
+            <div class="grid-item small-widget widget" id="m_depthfilterdiv"><?= $sensor_info2['name']?> Depth<canvas id="m_cv_bar2" style="max-height: 250px;"></canvas></div>-->
 
-            <div class="grid-item widget mini-widget " id="m_amdiv">Ammonia<canvas id="m_cv_amm"></canvas></div>
+            <div class="grid-item widget mini-widget " id="m_amdiv">Ammonia<canvas id="m_cv_amm" style="border-color:<?php if ($status == true && (end($type1)['ammonia'] >= $tank_param['ammonia_min'] && end($type1)['ammonia'] <= $tank_param['ammonia_max']) && (end($type2)['ammonia'] >= $tank_param['ammonia_min'] && end($type2)['ammonia'] <= $tank_param['ammonia_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;"></canvas></div>
 
-            <div class="grid-item widget mini-widget" id="m_tudiv">Turbidity<canvas id="m_cv_tur"></canvas></div>
+            <div class="grid-item widget mini-widget" id="m_tudiv">Turbidity<canvas id="m_cv_tur" style="border-color:<?php if ($status == true && (end($type1)['turbidity'] >= $tank_param['turbidity_min'] && end($type1)['turbidity'] <= $tank_param['turbidity_max']) && (end($type2)['turbidity'] >= $tank_param['turbidity_min'] && end($type2)['turbidity'] <= $tank_param['turbidity_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;"></canvas></div>
 
-            <div class="grid-item widget mini-widget " id="m_nidiv">Nitrate<canvas id="m_cv_nit"></canvas></div>
+            <div class="grid-item widget mini-widget " id="m_nidiv">Nitrate<canvas id="m_cv_nit"  style="border-color:<?php if ($status == true && (end($type1)['nitrate'] >= $tank_param['nitrate_min'] && end($type1)['nitrate'] <= $tank_param['nitrate_max']) && (end($type2)['nitrate'] >= $tank_param['nitrate_min'] && end($type2)['nitrate'] <= $tank_param['nitrate_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;"></canvas></div>
 
-            <div class="grid-item widget temp-widget " id="m_tempdiv">Temperature<canvas style="max-height: 175px;" id="m_cv_temp"></canvas></div>
+            <div class="grid-item widget temp-widget " id="m_tempdiv"  style="border-color:<?php if ($status == true && (end($type1)['temp'] >= $tank_param['temp_min'] && end($type1)['temp'] <= $tank_param['temp_max']) && (end($type2)['temp'] >= $tank_param['temp_min'] && end($type2)['temp'] <= $tank_param['temp_max'])) { echo '#cccccc';} else {echo '#d0342c';} ?>;">Temperature<canvas style="max-height: 175px;" id="m_cv_temp"></canvas></div>
             
         </div>
     
@@ -373,9 +391,9 @@ $message = DBHandler::sortedMessages($id);
 <?php if ($status) { ?>
 <script>    
         const ph_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
-        const ph_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+        const ph_data1label = "<?= $sensor_info1['name']?>";
         const ph_data1 = <?= json_encode(array_column($type1, 'ph'))?>.slice(-6);
-        const ph_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+        const ph_data2label = "<?= $sensor_info2['name']?>";
         const ph_data2 = <?= json_encode(array_column($type2, 'ph'))?>.slice(-6);            
 
         const cv_ph = document.getElementById('cv_ph');
@@ -386,15 +404,15 @@ $message = DBHandler::sortedMessages($id);
                 datasets:[{
                     label:ph_data1label,   //Sensor type or name
                     data: ph_data1,   //timestamp pair of data
-                    backgroundColor: '#00bfff33',
-                    borderColor: '#00b2ff',
+                    backgroundColor: <?php if (end($type1)['ph'] >= $tank_param['ph_min'] && end($type1)['ph'] <= $tank_param['ph_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+                    borderColor: <?php if (end($type1)['ph'] >= $tank_param['ph_min'] && end($type1)['ph'] <= $tank_param['ph_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
                     borderWidth: 2,
                     fill: true   
                 },{
                     label: ph_data2label,
                     data: ph_data2,
-                    backgroundColor: '#f700ff2c',
-                    borderColor: '#f700ff',
+                    backgroundColor: <?php if (end($type2)['ph'] >= $tank_param['ph_min'] && end($type2)['ph'] <= $tank_param['ph_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+                    borderColor: <?php if (end($type2)['ph'] >= $tank_param['ph_min'] && end($type2)['ph'] <= $tank_param['ph_max']) { echo '"#f700ff"';} else {echo '"#d0342c"';}?>,
                     borderWidth: 2,
                     fill: true
                 }
@@ -430,15 +448,15 @@ $message = DBHandler::sortedMessages($id);
                 datasets:[{
                     label:ph_data1label,   //Sensor type or name
                     data: ph_data1,   //timestamp pair of data
-                    backgroundColor: '#00bfff33',
-                    borderColor: '#00b2ff',
+                    backgroundColor: <?php if (end($type1)['ph'] >= $tank_param['ph_min'] && end($type1)['ph'] <= $tank_param['ph_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+                    borderColor: <?php if (end($type1)['ph'] >= $tank_param['ph_min'] && end($type1)['ph'] <= $tank_param['ph_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
                     borderWidth: 2,
                     fill: true   
                 },{
                     label: ph_data2label,
                     data: ph_data2,
-                    backgroundColor: '#f700ff2c',
-                    borderColor: '#f700ff',
+                    backgroundColor: <?php if (end($type2)['ph'] >= $tank_param['ph_min'] && end($type2)['ph'] <= $tank_param['ph_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+                    borderColor: <?php if (end($type2)['ph'] >= $tank_param['ph_min'] && end($type2)['ph'] <= $tank_param['ph_max']) { echo '"#f700ff"';} else {echo '"#d0342c"';}?>,
                     borderWidth: 2,
                     fill: true
                 }
@@ -468,9 +486,9 @@ $message = DBHandler::sortedMessages($id);
 
 
 const do_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
-const do_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+const do_data1label = "<?= $sensor_info1['name']?>";
 const do_data1 = <?= json_encode(array_column($type1, 'do'))?>.slice(-6);
-const do_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+const do_data2label = "<?= $sensor_info2['name']?>";
 const do_data2 = <?= json_encode(array_column($type2, 'do'))?>.slice(-6);            
 
 const cv_do = document.getElementById('cv_do');
@@ -481,15 +499,15 @@ const ch_do = new Chart(cv_do, {
         datasets:[{
             label:do_data1label,   //Sensor type or name
             data: do_data1,   //timestamp pair of data
-            backgroundColor: '#00bfff33',
-            borderColor: '#00b2ff',
+            backgroundColor: <?php if (end($type1)['do'] >= $tank_param['do_min'] && end($type1)['do'] <= $tank_param['do_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type1)['do'] >= $tank_param['do_min'] && end($type1)['do'] <= $tank_param['do_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true   
         },{
             label: do_data2label,
             data: do_data2,
-            backgroundColor: '#f700ff2c',
-            borderColor: '#f700ff',
+            backgroundColor: <?php if (end($type2)['do'] >= $tank_param['do_min'] && end($type2)['do'] <= $tank_param['do_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type2)['do'] >= $tank_param['do_min'] && end($type2)['do'] <= $tank_param['do_max']) { echo '"#f700ff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true
         }
@@ -524,15 +542,15 @@ const m_ch_do = new Chart(m_cv_do, {
         datasets:[{
             label:do_data1label,   //Sensor type or name
             data: do_data1,   //timestamp pair of data
-            backgroundColor: '#00bfff33',
-            borderColor: '#00b2ff',
+            backgroundColor: <?php if (end($type1)['do'] >= $tank_param['do_min'] && end($type1)['do'] <= $tank_param['do_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type1)['do'] >= $tank_param['do_min'] && end($type1)['do'] <= $tank_param['do_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true   
         },{
             label: do_data2label,
             data: do_data2,
-            backgroundColor: '#f700ff2c',
-            borderColor: '#f700ff',
+            backgroundColor: <?php if (end($type2)['do'] >= $tank_param['do_min'] && end($type2)['do'] <= $tank_param['do_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type2)['do'] >= $tank_param['do_min'] && end($type2)['do'] <= $tank_param['do_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true
         }
@@ -561,9 +579,9 @@ const m_ch_do = new Chart(m_cv_do, {
 });
 
 const sal_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
-const sal_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+const sal_data1label = "<?= $sensor_info1['name']?>";
 const sal_data1 = <?= json_encode(array_column($type1, 'salinity'))?>.slice(-6);
-const sal_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+const sal_data2label = "<?= $sensor_info2['name']?>";
 const sal_data2 = <?= json_encode(array_column($type2, 'salinity'))?>.slice(-6);            
 
 const cv_sal = document.getElementById('cv_sal');
@@ -574,15 +592,15 @@ const ch_sal = new Chart(cv_sal, {
         datasets:[{
             label:sal_data1label,   //Sensor type or name
             data: sal_data1,   //timestamp pair of data
-            backgroundColor: '#00bfff33',
-            borderColor: '#00b2ff',
+            backgroundColor: <?php if (end($type1)['salinity'] >= $tank_param['salinity_min'] && end($type1)['salinity'] <= $tank_param['salinity_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type1)['salinity'] >= $tank_param['salinity_min'] && end($type1)['salinity'] <= $tank_param['salinity_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true   
         },{
             label: sal_data2label,
             data: sal_data2,
-            backgroundColor: '#f700ff2c',
-            borderColor: '#f700ff',
+            backgroundColor: <?php if (end($type2)['salinity'] >= $tank_param['salinity_min'] && end($type2)['salinity'] <= $tank_param['salinity_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type2)['salinity'] >= $tank_param['salinity_min'] && end($type2)['salinity'] <= $tank_param['salinity_max']) { echo '"#f700ff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true
         }
@@ -618,15 +636,15 @@ const m_ch_sal = new Chart(m_cv_sal, {
         datasets:[{
             label:sal_data1label,   //Sensor type or name
             data: sal_data1,   //timestamp pair of data
-            backgroundColor: '#00bfff33',
-            borderColor: '#00b2ff',
+            backgroundColor: <?php if (end($type1)['salinity'] >= $tank_param['salinity_min'] && end($type1)['salinity'] <= $tank_param['salinity_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type1)['salinity'] >= $tank_param['salinity_min'] && end($type1)['salinity'] <= $tank_param['salinity_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true   
         },{
             label: sal_data2label,
             data: sal_data2,
-            backgroundColor: '#f700ff2c',
-            borderColor: '#f700ff',
+            backgroundColor: <?php if (end($type2)['salinity'] >= $tank_param['salinity_min'] && end($type2)['salinity'] <= $tank_param['salinity_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type2)['salinity'] >= $tank_param['salinity_min'] && end($type2)['salinity'] <= $tank_param['salinity_max']) { echo '"#f700ff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true
         }
@@ -657,9 +675,9 @@ const m_ch_sal = new Chart(m_cv_sal, {
 
 
 const amm_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
-const amm_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+const amm_data1label = "<?= $sensor_info1['name']?>";
 const amm_data1 = <?= json_encode(array_column($type1, 'ammonia'))?>.slice(-6);
-const amm_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+const amm_data2label = "<?= $sensor_info2['name']?>";
 const amm_data2 = <?= json_encode(array_column($type2, 'ammonia'))?>.slice(-6);            
 
 const cv_amm = document.getElementById('cv_amm');
@@ -670,15 +688,15 @@ const ch_amm = new Chart(cv_amm, {
         datasets:[{
             label:amm_data1label,   //Sensor type or name
             data: amm_data1,   //timestamp pair of data
-            backgroundColor: '#00bfff33',
-            borderColor: '#00b2ff',
+            backgroundColor: <?php if (end($type1)['ammonia'] >= $tank_param['ammonia_min'] && end($type1)['ammonia'] <= $tank_param['ammonia_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type1)['ammonia'] >= $tank_param['ammonia_min'] && end($type1)['ammonia'] <= $tank_param['ammonia_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true   
         },{
             label: amm_data2label,
             data: amm_data2,
-            backgroundColor: '#f700ff2c',
-            borderColor: '#f700ff',
+            backgroundColor: <?php if (end($type2)['ammonia'] >= $tank_param['ammonia_min'] && end($type2)['ammonia'] <= $tank_param['ammonia_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type2)['ammonia'] >= $tank_param['ammonia_min'] && end($type2)['ammonia'] <= $tank_param['ammonia_max']) { echo '"#f700ff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true
         }
@@ -714,15 +732,15 @@ const m_ch_amm = new Chart(m_cv_amm, {
         datasets:[{
             label:amm_data1label,   //Sensor type or name
             data: amm_data1,   //timestamp pair of data
-            backgroundColor: '#00bfff33',
-            borderColor: '#00b2ff',
+            backgroundColor: <?php if (end($type1)['ammonia'] >= $tank_param['ammonia_min'] && end($type1)['ammonia'] <= $tank_param['ammonia_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type1)['ammonia'] >= $tank_param['ammonia_min'] && end($type1)['ammonia'] <= $tank_param['ammonia_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true   
         },{
             label: amm_data2label,
             data: amm_data2,
-            backgroundColor: '#f700ff2c',
-            borderColor: '#f700ff',
+            backgroundColor: <?php if (end($type2)['ammonia'] >= $tank_param['ammonia_min'] && end($type2)['ammonia'] <= $tank_param['ammonia_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type2)['ammonia'] >= $tank_param['ammonia_min'] && end($type2)['ammonia'] <= $tank_param['ammonia_max']) { echo '"#f700ff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true
         }
@@ -752,9 +770,9 @@ const m_ch_amm = new Chart(m_cv_amm, {
 
 
 const nit_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
-const nit_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+const nit_data1label = "<?= $sensor_info1['name']?>";
 const nit_data1 = <?= json_encode(array_column($type1, 'nitrate'))?>.slice(-6);
-const nit_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+const nit_data2label = "<?= $sensor_info2['name']?>";
 const nit_data2 = <?= json_encode(array_column($type2, 'nitrate'))?>.slice(-6);            
 
 const cv_nit = document.getElementById('cv_nit');
@@ -765,15 +783,15 @@ const ch_nit = new Chart(cv_nit, {
         datasets:[{
             label:nit_data1label,   //Sensor type or name
             data: nit_data1,   //timestamp pair of data
-            backgroundColor: '#00bfff33',
-            borderColor: '#00b2ff',
+            backgroundColor: <?php if (end($type1)['nitrate'] >= $tank_param['nitrate_min'] && end($type1)['nitrate'] <= $tank_param['nitrate_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type1)['nitrate'] >= $tank_param['nitrate_min'] && end($type1)['nitrate'] <= $tank_param['nitrate_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true   
         },{
             label: nit_data2label,
             data: nit_data2,
-            backgroundColor: '#f700ff2c',
-            borderColor: '#f700ff',
+            backgroundColor: <?php if (end($type2)['nitrate'] >= $tank_param['nitrate_min'] && end($type2)['nitrate'] <= $tank_param['nitrate_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type2)['nitrate'] >= $tank_param['nitrate_min'] && end($type2)['nitrate'] <= $tank_param['nitrate_max']) { echo '"#f700ff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true
         }
@@ -809,15 +827,15 @@ const m_ch_nit = new Chart(m_cv_nit, {
         datasets:[{
             label:nit_data1label,   //Sensor type or name
             data: nit_data1,   //timestamp pair of data
-            backgroundColor: '#00bfff33',
-            borderColor: '#00b2ff',
+            backgroundColor: <?php if (end($type1)['nitrate'] >= $tank_param['nitrate_min'] && end($type1)['nitrate'] <= $tank_param['nitrate_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type1)['nitrate'] >= $tank_param['nitrate_min'] && end($type1)['nitrate'] <= $tank_param['nitrate_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true   
         },{
             label: nit_data2label,
             data: nit_data2,
-            backgroundColor: '#f700ff2c',
-            borderColor: '#f700ff',
+            backgroundColor: <?php if (end($type2)['nitrate'] >= $tank_param['nitrate_min'] && end($type2)['nitrate'] <= $tank_param['nitrate_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type2)['nitrate'] >= $tank_param['nitrate_min'] && end($type2)['nitrate'] <= $tank_param['nitrate_max']) { echo '"#f700ff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true
         }
@@ -846,9 +864,9 @@ const m_ch_nit = new Chart(m_cv_nit, {
 });
 
 const tur_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
-const tur_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+const tur_data1label = "<?= $sensor_info1['name']?>";
 const tur_data1 = <?= json_encode(array_column($type1, 'turbidity'))?>.slice(-6);
-const tur_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+const tur_data2label = "<?= $sensor_info2['name']?>";
 const tur_data2 = <?= json_encode(array_column($type2, 'turbidity'))?>.slice(-6);            
 
 const cv_tur = document.getElementById('cv_tur');
@@ -859,15 +877,15 @@ const ch_tur = new Chart(cv_tur, {
         datasets:[{
             label:tur_data1label,   //Sensor type or name
             data: tur_data1,   //timestamp pair of data
-            backgroundColor: '#00bfff33',
-            borderColor: '#00b2ff',
+            backgroundColor: <?php if (end($type1)['turbidity'] >= $tank_param['turbidity_min'] && end($type1)['turbidity'] <= $tank_param['turbidity_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type1)['turbidity'] >= $tank_param['turbidity_min'] && end($type1)['turbidity'] <= $tank_param['turbidity_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true   
         },{
             label: tur_data2label,
             data: tur_data2,
-            backgroundColor: '#f700ff2c',
-            borderColor: '#f700ff',
+            backgroundColor: <?php if (end($type2)['turbidity'] >= $tank_param['turbidity_min'] && end($type2)['turbidity'] <= $tank_param['turbidity_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type2)['turbidity'] >= $tank_param['turbidity_min'] && end($type2)['turbidity'] <= $tank_param['turbidity_max']) { echo '"#f700ff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true
         }
@@ -903,15 +921,15 @@ const m_ch_tur = new Chart(m_cv_tur, {
         datasets:[{
             label:tur_data1label,   //Sensor type or name
             data: tur_data1,   //timestamp pair of data
-            backgroundColor: '#00bfff33',
-            borderColor: '#00b2ff',
+            backgroundColor: <?php if (end($type1)['turbidity'] >= $tank_param['turbidity_min'] && end($type1)['turbidity'] <= $tank_param['turbidity_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type1)['turbidity'] >= $tank_param['turbidity_min'] && end($type1)['turbidity'] <= $tank_param['turbidity_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true   
         },{
             label: tur_data2label,
             data: tur_data2,
-            backgroundColor: '#f700ff2c',
-            borderColor: '#f700ff',
+            backgroundColor: <?php if (end($type2)['turbidity'] >= $tank_param['turbidity_min'] && end($type2)['turbidity'] <= $tank_param['turbidity_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type2)['turbidity'] >= $tank_param['turbidity_min'] && end($type2)['turbidity'] <= $tank_param['turbidity_max']) { echo '"#f700ff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true
         }
@@ -941,9 +959,9 @@ const m_ch_tur = new Chart(m_cv_tur, {
 
 
 const temp_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-6);
-const temp_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+const temp_data1label = "<?= $sensor_info1['name']?>";
 const temp_data1 = <?= json_encode(array_column($type1, 'temp'))?>.slice(-6);
-const temp_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+const temp_data2label = "<?= $sensor_info2['name']?>";
 const temp_data2 = <?= json_encode(array_column($type2, 'temp'))?>.slice(-6);            
 
 const cv_temp = document.getElementById('cv_temp');
@@ -954,15 +972,15 @@ const ch_temp = new Chart(cv_temp, {
         datasets:[{
             label:temp_data1label,   //Sensor type or name
             data: temp_data1,   //timestamp pair of data
-            backgroundColor: '#00bfff33',
-            borderColor: '#00b2ff',
+            backgroundColor: <?php if (end($type1)['temp'] >= $tank_param['temp_min'] && end($type1)['temp'] <= $tank_param['temp_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type1)['temp'] >= $tank_param['temp_min'] && end($type1)['temp'] <= $tank_param['temp_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true   
         },{
             label: temp_data2label,
             data: temp_data2,
-            backgroundColor: '#f700ff2c',
-            borderColor: '#f700ff',
+            backgroundColor: <?php if (end($type2)['temp'] >= $tank_param['temp_min'] && end($type2)['temp'] <= $tank_param['temp_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type2)['temp'] >= $tank_param['temp_min'] && end($type2)['temp'] <= $tank_param['temp_max']) { echo '"#f700ff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true
         }
@@ -998,15 +1016,15 @@ const m_ch_temp = new Chart(m_cv_temp, {
         datasets:[{
             label:temp_data1label,   //Sensor type or name
             data: temp_data1,   //timestamp pair of data
-            backgroundColor: '#00bfff33',
-            borderColor: '#00b2ff',
+            backgroundColor: <?php if (end($type1)['temp'] >= $tank_param['temp_min'] && end($type1)['temp'] <= $tank_param['temp_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type1)['temp'] >= $tank_param['temp_min'] && end($type1)['temp'] <= $tank_param['temp_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true   
         },{
             label: temp_data2label,
             data: temp_data2,
-            backgroundColor: '#f700ff2c',
-            borderColor: '#f700ff',
+            backgroundColor: <?php if (end($type2)['temp'] >= $tank_param['temp_min'] && end($type2)['temp'] <= $tank_param['temp_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+            borderColor: <?php if (end($type2)['temp'] >= $tank_param['temp_min'] && end($type2)['temp'] <= $tank_param['temp_max']) { echo '"#f700ff"';} else {echo '"#d0342c"';}?>,
             borderWidth: 2,
             fill: true
         }
@@ -1037,9 +1055,9 @@ const m_ch_temp = new Chart(m_cv_temp, {
 
 
 const dep_chartlabel = <?= json_encode(array_keys($type1))?>.slice(-1);
-const dep_data1label = "<?= $type1[reset($keytype1)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+const dep_data1label = "<?= $sensor_info1['name']?>";
 const dep_data1 = <?= json_encode($dep1)?>.slice(-1);
-const dep_data2label = "<?= $type2[reset($keytype2)]['type'] == '1' ? 'Fish Tank':'Biofilter'?>";
+const dep_data2label = "<?= $sensor_info2['name']?>";
 const dep_data2 = <?= json_encode($dep2)?>.slice(-1);            
 
 const cv_dep1 = document.getElementById('cv_bar1');
@@ -1050,8 +1068,8 @@ const ch_dep1 = new Chart(cv_dep1, {
     datasets: [{
         label:dep_data1label,
         data: [dep_data1], // Value for the bar (ranging from 0 to 300)
-        backgroundColor: '#00bfff33', // Bar color
-        borderColor: '#00b2ff', // Bar border color
+        backgroundColor: <?php if (end($type1)['depth'] >= $tank_param['depth_min'] && end($type1)['depth'] <= $tank_param['depth_max']) { echo '"#00bfff33"';} else {echo '"#d0342c33"';}?>,
+        borderColor: <?php if (end($type1)['depth'] >= $tank_param['depth_min'] && end($type1)['depth'] <= $tank_param['depth_max']) { echo '"#00bfff"';} else {echo '"#d0342c"';}?>,
         borderWidth: 2 // Bar border width
     }]
 },
@@ -1086,9 +1104,9 @@ const ch_dep2 = new Chart(cv_dep2, {
         datasets:[{
             label:dep_data2label,   //Sensor type or name
             data: [dep_data2],   //timestamp pair of data
-            backgroundColor: '#f700ff2c',
-            borderColor: '#f700ff',
-            borderWidth: 2,
+        backgroundColor: <?php if (end($type2)['depth'] >= $tank_param['depth_min'] && end($type2)['depth'] <= $tank_param['depth_max']) { echo '"#f700ff2c"';} else {echo '"#d0342c33"';}?>,
+        borderColor: <?php if (end($type2)['depth'] >= $tank_param['depth_min'] && end($type2)['depth'] <= $tank_param['depth_max']) { echo '"#f700ff"';} else {echo '"#d0342c"';}?>,
+        borderWidth: 2,
             fill: true   
         },
     ]},
@@ -1173,10 +1191,10 @@ var m_donutChart = new Chart(m_ch_main, {
     }
 });
 
-document.getElementById('m_mainright').innerHTML = `Fish Tank</br><b style="font-size: 40px;">${fishTankQuality}%</b>`;
-document.getElementById('m_mainleft').innerHTML = `Biofilter</br><b style="font-size: 40px;">${bioFilterQuality}%</b>`;
-document.getElementById('mainright').innerHTML = `Fish Tank</br><b style="font-size: 40px;">${fishTankQuality}%</b>`;
-document.getElementById('mainleft').innerHTML = `Biofilter</br><b style="font-size: 40px;">${bioFilterQuality}%</b>`;
+document.getElementById('m_mainright').innerHTML = `<?= $sensor_info1['name']?></br><b style="font-size: 40px;">${fishTankQuality}%</b>`;
+document.getElementById('m_mainleft').innerHTML = `<?= $sensor_info2['name']?></br><b style="font-size: 40px;">${bioFilterQuality}%</b>`;
+document.getElementById('mainright').innerHTML = `<?= $sensor_info1['name']?></br><b style="font-size: 40px;">${fishTankQuality}%</b>`;
+document.getElementById('mainleft').innerHTML = `<?= $sensor_info2['name']?></br><b style="font-size: 40px;">${bioFilterQuality}%</b>`;
     </script>
     <?php } ?>
 </body>

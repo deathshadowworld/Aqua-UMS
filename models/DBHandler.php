@@ -169,6 +169,23 @@ class DBHandler
         pg_close($connection);
         return $listresult;
     }
+
+    public static function findSensor($id) {
+        #####
+        $host = 'satao.db.elephantsql.com';
+        $port = '5432';
+        $dbname = 'dxtshkjc';
+        $dbusername = 'dxtshkjc';
+        $password = self::getDBPassword();
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        ####
+        $query = "SELECT * FROM \"sensor\" WHERE sensor_id = $id";
+        ####
+        $result = pg_query($connection, $query);
+        $list = pg_fetch_assoc($result);
+        pg_close($connection);
+        return $list;
+    }
     public static function getMessage() {
         #####
         $host = 'satao.db.elephantsql.com';
@@ -624,7 +641,7 @@ class DBHandler
         depth_max,
         cycle_length)
         VALUES (
-            $id,6,8,10,20,5,6,0,5,3,9,0,3,23,30,250,300,60
+            $id,6,8,0,0,0,0,0,0,0,0,0,0,23,30,0,0,60
         );";
         $result = pg_query($connection, $query);
         $mid = $id+1;

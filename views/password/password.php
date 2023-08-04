@@ -8,6 +8,7 @@
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 use app\models\PasswordForm;
+use app\models\DBHandler;
 $model = new PasswordForm;
 $this->title = 'Aqua UMS Project';
 ?>
@@ -57,8 +58,9 @@ $this->title = 'Aqua UMS Project';
         </div>
     </div>
 
+    <?php $sitename = 'http://'.$GLOBALS['HOSTNAME'].':8080/admin'; ?>
     <div class="bottomleftnav" id="navbuttons">
-        <div id="adminbutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/admin';">Admin</div>
+        <?php if (DBHandler::findAdmin() == true) {echo "<div id='adminbutton' class='navicon' onclick='location.href=\"$sitename\";'>Admin</div>";} ?>
         <div id="homebutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';">Home</div>
         <div id="profilebutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/profile';">Profile</div>
         <div id="logoutbutton" class="logout" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/logout';">Logout</div>

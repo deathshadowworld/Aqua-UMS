@@ -69,7 +69,7 @@ foreach ($tanklist as $each){
         
         <h1>Admin Panel</h1>
         <div class="admin-container">
-            <div class="admin-item bordered admin-select">
+            <div class="admin-item bordered admin-select" style="visibility: hidden;">
                 Appoint Admin</br></br>
                 <ul>
                     <?php
@@ -160,7 +160,7 @@ foreach ($tanklist as $each){
             </div>
 
 
-            <div class="admin-item bordered admin-select">
+            <div class="admin-item bordered admin-select" style="visibility: hidden;">
                 Revoke Admin</br></br>
                 <ul>
                 <?php
@@ -237,8 +237,9 @@ foreach ($tanklist as $each){
 
 
 
+    <?php $sitename = 'http://'.$GLOBALS['HOSTNAME'].':8080/admin'; ?>
     <div class="bottomleftnav" id="navbuttons">
-        <div id="adminbutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/admin';">Admin</div>
+        <?php if (DBHandler::findAdmin() == true) {echo "<div id='adminbutton' class='navicon' onclick='location.href=\"$sitename\";'>Admin</div>";} ?>
         <div id="homebutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';">Home</div>
         <div id="profilebutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/profile';">Profile</div>
         <div id="logoutbutton" class="logout" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/logout';">Logout</div>

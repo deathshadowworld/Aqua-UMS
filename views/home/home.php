@@ -121,7 +121,7 @@ $message = DBHandler::sortedMessages($id);
     <div class="desktop-view">
         <div style="height:10vh; width:98vw;">
             <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821207343374417/LOGO_UMS_putih.png" style="max-height: 9vh;" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';"></span>
-            <span class="header"><b style="font-size: 30px;">Aqua UMS Project</b></br>Kerjasama Fakulti Komputeran dan Informatik dan Institut Penyelidikan Marin Borneo</span>
+            <span class="header"><b>Aqua UMS Project</b></br>Kerjasama Fakulti Komputeran dan Informatik dan Institut Penyelidikan Marin Borneo</span>
             <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821361966387350/EcoCampus-Putih.png" style="max-height: 9vh;"></span>
         </div>
         <div class="" style="" id="monitorwindow">
@@ -253,12 +253,8 @@ $message = DBHandler::sortedMessages($id);
     <div class="mobile-view">
     <div style="height:10vh; width:92vw;">
             <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821207343374417/LOGO_UMS_putih.png" style="max-height: 9vh;" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';"></span>
-            <span class="header"></span>
+            <span class="header" style="width: 100%;"><b>Aqua UMS Project</b></br>Kerjasama Fakulti Komputeran dan Informatik dan Institut Penyelidikan Marin Borneo</span>
             <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821361966387350/EcoCampus-Putih.png" style="max-height: 9vh;"></span>
-        </div>
-        <div style="height:10vh; width:92vw;">
-            <span class="header" style="width: 100%;"><b style="font-size: 30px;">Aqua UMS Project</b></br>Kerjasama Fakulti Komputeran dan Informatik dan Institut Penyelidikan Marin Borneo</span>
-            
         </div>
     <div class="" style="" id="m_monitorwindow">
         <div class="grid-container" style=" margin-bottom: 50px;">

@@ -23,7 +23,7 @@ class AppAsset extends AssetBundle
         'css/site.css',
         #'https://cdn.discordapp.com/attachments/616833107965771776/1097357861010546798/styles.css',
         #'styles.css',
-        'https://cdn.discordapp.com/attachments/617712184553766924/1138386287204778114/styles.css',
+        'https://cdn.discordapp.com/attachments/617712184553766924/1138388486077026324/styles.css',
     ];
     public $js = [
         'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.1/chart.min.js',

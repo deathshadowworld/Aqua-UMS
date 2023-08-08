@@ -258,7 +258,7 @@ $message = DBHandler::sortedMessages($id);
         </div>
     <div class="" style="" id="m_monitorwindow">
         <div class="grid-container" style=" margin-bottom: 50px;">
-        <div class="grid-item widget tank-widget" style="margin-top: 120px;" id="m_infodiv"><u>Tank Info</u></br></br>
+        <div class="grid-item widget tank-widget" style="margin-top: 160px; height: 250px;" id="m_infodiv"><u>Tank Info</u></br></br>
                 <span style="position: absolute; top: 80%; right:30%; width: 40%;padding: 4px;">
                     <select style="width: 200px;" id="m_sel_displaytank">
                     <?php

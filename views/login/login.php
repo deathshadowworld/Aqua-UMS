@@ -18,7 +18,7 @@ $this->title = 'Aqua UMS Project';
     <!--<link rel="stylesheet" href="https://cdn.discordapp.com/attachments/616833107965771776/1097357861010546798/styles.css">-->
     <!--<link rel="stylesheet" href="styles.css">-->
     <style>
-        
+
 
     </style>
 </head>

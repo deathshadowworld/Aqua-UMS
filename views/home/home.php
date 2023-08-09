@@ -634,7 +634,7 @@ $message = DBHandler::sortedMessages($id);
                     stepSize: 1,
                 },
                 y: {
-                    max: 10000,
+                    max: 10,
                     min: 0,
                     stepSize: 0.1,
                 }
@@ -1432,8 +1432,8 @@ $message = DBHandler::sortedMessages($id);
         }
     });
 
-    const fishTankQuality = parseInt((parseFloat(ph_data1.slice(-1)[0])+parseFloat(do_data1.slice(-1)[0])+parseFloat(amm_data1.slice(-1)[0])+parseFloat(sal_data1.slice(-1)[0])+parseFloat(nit_data1.slice(-1)[0])+parseFloat(tur_data1.slice(-1)[0])+parseFloat(temp_data1.slice(-1)[0]))/7*6);
-    const bioFilterQuality = parseInt(parseFloat(ph_data2.slice(-1)[0])+parseFloat(do_data2.slice(-1)[0])+parseFloat(amm_data2.slice(-1)[0])+parseFloat(sal_data2.slice(-1)[0])+parseFloat(nit_data2.slice(-1)[0])+parseFloat(tur_data2.slice(-1)[0])+parseFloat(temp_data2.slice(-1)[0]));
+    const fishTankQuality = parseInt((parseFloat(ph_data1.slice(-1)[0])+parseFloat(do_data1.slice(-1)[0]/1000)+parseFloat(amm_data1.slice(-1)[0])+parseFloat(sal_data1.slice(-1)[0])+parseFloat(nit_data1.slice(-1)[0])+parseFloat(tur_data1.slice(-1)[0])+parseFloat(temp_data1.slice(-1)[0]))/7*6);
+    const bioFilterQuality = parseInt(parseFloat(ph_data2.slice(-1)[0])+parseFloat(do_data2.slice(-1)[0]/1000)+parseFloat(amm_data2.slice(-1)[0])+parseFloat(sal_data2.slice(-1)[0])+parseFloat(nit_data2.slice(-1)[0])+parseFloat(tur_data2.slice(-1)[0])+parseFloat(temp_data2.slice(-1)[0]));
     var ch_main = document.getElementById('mainChart').getContext('2d');
     var donutChart = new Chart(ch_main, {
         type: 'doughnut',

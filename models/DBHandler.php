@@ -758,6 +758,15 @@ public static function findTankforSensor($value){
         }
     }
 
+    public static function findMaster(){
+        if (Yii::$app->user->identity->id == '815121'){
+            return true;
+        }
+        else {
+            return false; 
+        }
+    }
+
     public static function findAdminbyID($id){
         $host = 'satao.db.elephantsql.com';
         $port = '5432';

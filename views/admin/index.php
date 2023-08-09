@@ -69,7 +69,7 @@ foreach ($tanklist as $each){
         
         <h1>Admin Panel</h1>
         <div class="admin-container">
-            <div class="admin-item bordered admin-select" style="visibility: hidden;">
+            <div class="admin-item bordered admin-select" style="visibility: <?php if (DBHandler::findMaster() == true) {echo "";} else {echo "hidden";} ?>;">
                 Appoint Admin</br></br>
                 <ul>
                     <?php

@@ -21,8 +21,8 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
-        #'styles.css',
-        'https://cdn.discordapp.com/attachments/617712184553766924/1138389391929249832/styles.css',
+        #'assets/styles.css',
+        '',
     ];
     public $js = [
         'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.1/chart.min.js',

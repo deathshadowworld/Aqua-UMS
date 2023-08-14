@@ -215,10 +215,15 @@ $message = DBHandler::sortedMessages($id);
                     <th style="width:150px;">Timestamp</th>
                 </tr>
                 <?php
+                $msg_index = 0;
                 foreach ($message['warning'] as $each) {
+                    if ($msg_index > 14) {
+                        break;
+                    }
                     echo '<tr><td>' . $each['message_id'] . '</td>';
                     echo '<td>' . $each['content'] . '</td>';
                     echo '<td>' . $each['time_posted'] . '</td></tr>';
+                    $msg_index = $msg_index + 1;
                 }
                 ?>
 
@@ -232,10 +237,15 @@ $message = DBHandler::sortedMessages($id);
                     <th style="width:150px;">Timestamp</th>
                 </tr>
                 <?php
+                $msg_index = 0;
                 foreach ($message['sensor'] as $each) {
+                    if ($msg_index > 14) {
+                        break;
+                    }
                     echo '<tr><td>' . $each['message_id'] . '</td>';
                     echo '<td>' . $each['content'] . '</td>';
                     echo '<td>' . $each['time_posted'] . '</td></tr>';
+                    $msg_index = $msg_index + 1;
                 }
                 ?>
 
@@ -249,10 +259,15 @@ $message = DBHandler::sortedMessages($id);
                     <th style="width:150px;">Timestamp</th>
                 </tr>
                     <?php
+                    $msg_index = 0;
                     foreach ($message['forecast'] as $each) {
+                        if ($msg_index > 14) {
+                            break;
+                        }
                         echo '<tr><td>' . $each['message_id'] . '</td>';
                         echo '<td>' . $each['content'] . '</td>';
                         echo '<td>' . $each['time_posted'] . '</td></tr>';
+                        $msg_index = $msg_index + 1;
                     }
                     ?>
 
@@ -289,7 +304,7 @@ $message = DBHandler::sortedMessages($id);
     <div style="height:10vh; width:92vw;">
             <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821207343374417/LOGO_UMS_putih.png" style="max-height: 9vh;" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';"></span>
             <span class="header" style="width: 100%;"><b>Aqua UMS Project</b></br>Kerjasama Fakulti Komputeran dan Informatik dan Institut Penyelidikan Marin Borneo</span>
-            <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821361966387350/EcoCampus-Putih.png" style="max-height: 9vh;"></span>
+            <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821361966387350/EcoCampus-Putih.png" style="max-height: 9vh;" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/admin';"></span>
         </div>
     <div class="" style="" id="m_monitorwindow">
         <div class="grid-container" style=" margin-bottom: 50px;">
@@ -382,10 +397,15 @@ $message = DBHandler::sortedMessages($id);
                         <th style="width:150px;">Timestamp</th>
                     </tr>
                     <?php
+                    $msg_index = 0;
                     foreach ($message['warning'] as $each) {
+                        if ($msg_index > 14) {
+                            break;
+                        }
                         echo '<tr><td>' . $each['message_id'] . '</td>';
                         echo '<td>' . $each['content'] . '</td>';
                         echo '<td>' . $each['time_posted'] . '</td></tr>';
+                        $msg_index = $msg_index + 1;
                     }
                     ?>
 
@@ -401,10 +421,15 @@ $message = DBHandler::sortedMessages($id);
                         <th style="width:150px;">Timestamp</th>
                     </tr>
                     <?php
+                    $msg_index = 0;
                     foreach ($message['sensor'] as $each) {
+                        if ($msg_index > 14) {
+                            break;
+                        }
                         echo '<tr><td>' . $each['message_id'] . '</td>';
                         echo '<td>' . $each['content'] . '</td>';
                         echo '<td>' . $each['time_posted'] . '</td></tr>';
+                        $msg_index = $msg_index + 1;
                     }
                     ?>
 
@@ -420,10 +445,15 @@ $message = DBHandler::sortedMessages($id);
                         <th style="width:150px;">Timestamp</th>
                     </tr>
                         <?php
+                        $msg_index = 0;
                         foreach ($message['forecast'] as $each) {
+                            if ($msg_index > 14) {
+                                break;
+                            }
                             echo '<tr><td>' . $each['message_id'] . '</td>';
                             echo '<td>' . $each['content'] . '</td>';
                             echo '<td>' . $each['time_posted'] . '</td></tr>';
+                            $msg_index = $msg_index + 1;
                         }
                         ?>
 
@@ -1432,7 +1462,7 @@ $message = DBHandler::sortedMessages($id);
         }
     });
 
-    const fishTankQuality = parseInt((parseFloat(ph_data1.slice(-1)[0])+parseFloat(do_data1.slice(-1)[0]/100)+parseFloat(amm_data1.slice(-1)[0])+parseFloat(sal_data1.slice(-1)[0])+parseFloat(nit_data1.slice(-1)[0])+parseFloat(tur_data1.slice(-1)[0])+parseFloat(temp_data1.slice(-1)[0]))/7*6);
+    const fishTankQuality = parseInt((parseFloat(ph_data1.slice(-1)[0])+parseFloat(do_data1.slice(-1)[0]/100)+parseFloat(amm_data1.slice(-1)[0])+parseFloat(sal_data1.slice(-1)[0])+parseFloat(nit_data1.slice(-1)[0])+parseFloat(tur_data1.slice(-1)[0])+parseFloat(temp_data1.slice(-1)[0])));
     const bioFilterQuality = parseInt(parseFloat(ph_data2.slice(-1)[0])+parseFloat(do_data2.slice(-1)[0]/100)+parseFloat(amm_data2.slice(-1)[0])+parseFloat(sal_data2.slice(-1)[0])+parseFloat(nit_data2.slice(-1)[0])+parseFloat(tur_data2.slice(-1)[0])+parseFloat(temp_data2.slice(-1)[0]));
     var ch_main = document.getElementById('mainChart').getContext('2d');
     var donutChart = new Chart(ch_main, {

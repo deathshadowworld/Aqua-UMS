@@ -399,7 +399,7 @@ $message = DBHandler::sortedMessages($id);
                     <?php
                     $msg_index = 0;
                     foreach ($message['warning'] as $each) {
-                        if ($msg_index > 14) {
+                        if ($msg_index > 6) {
                             break;
                         }
                         echo '<tr><td>' . $each['message_id'] . '</td>';
@@ -423,7 +423,7 @@ $message = DBHandler::sortedMessages($id);
                     <?php
                     $msg_index = 0;
                     foreach ($message['sensor'] as $each) {
-                        if ($msg_index > 14) {
+                        if ($msg_index > 6) {
                             break;
                         }
                         echo '<tr><td>' . $each['message_id'] . '</td>';
@@ -447,7 +447,7 @@ $message = DBHandler::sortedMessages($id);
                         <?php
                         $msg_index = 0;
                         foreach ($message['forecast'] as $each) {
-                            if ($msg_index > 14) {
+                            if ($msg_index > 6) {
                                 break;
                             }
                             echo '<tr><td>' . $each['message_id'] . '</td>';

@@ -23,8 +23,8 @@ $adminlist = DBHandler::getAdmins();
 
 $request = Yii::$app->request->get('tank_id');
 
-foreach ($tanklist as $each){
-    if ($each['id'] == $request){
+foreach ($tanklist as $each) {
+    if ($each['id'] == $request) {
         $request = $each;
         break;
     }
@@ -39,7 +39,7 @@ $user = Yii::$app->user->identity;
 
 $s_options = [];
 
-foreach ($tanklist as $each){
+foreach ($tanklist as $each) {
     $s_options[$each['id']] = $each['name'];
 }
 
@@ -58,9 +58,9 @@ foreach ($tanklist as $each){
 <body>
     
     <div style="height:10vh; width:98vw;">
-        <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821207343374417/LOGO_UMS_putih.png" style="max-height: 9vh;" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';"></span>
+        <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821207343374417/LOGO_UMS_putih.png?ex=6684c0b4&is=66836f34&hm=af5e9a87bb0dda7b341400235baa3f8d9323dbd3c0657ee6275dae95cea2b05e&" style="max-height: 9vh;" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';"></span>
         <span class="header"><b>Aqua UMS Project</b></br>Kerjasama Fakulti Komputeran dan Informatik dan Institut Penyelidikan Marin Borneo</span>
-        <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821361966387350/EcoCampus-Putih.png" style="max-height: 9vh;"></span>
+        <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821361966387350/EcoCampus-Putih.png?ex=6684c0d9&is=66836f59&hm=0fb2dbcc577308974208e89d2c2f8e6a39d4e87ff5822c27cb66677cb01fe47b&" style="max-height: 9vh;"></span>
         
     </div>
 
@@ -69,12 +69,16 @@ foreach ($tanklist as $each){
         
         <h1>Admin Panel</h1>
         <div class="admin-container">
-            <div class="admin-item bordered admin-select" style="visibility: <?php if (DBHandler::findMaster() == true) {echo "show";} else {echo "hidden";} ?>;">
+            <div class="admin-item bordered admin-select" style="visibility: <?php if (DBHandler::findMaster() == true) {
+                echo "show";
+            } else {
+                echo "hidden";
+            } ?>;">
                 Appoint Admin</br></br>
                 <ul>
                     <?php
-                    foreach ($nonadminlist as $each){
-                        echo "<li>ID: ".$each['id']." | ".$each['fullname']."</br><button id='bt_appoint".$each['id']."' onclick=\"location.href ='http://$GLOBALS[HOSTNAME]:8080/admin/appoint/".$each['id']."';\">Appoint ".$each['fullname']."</button></li></br>";
+                    foreach ($nonadminlist as $each) {
+                        echo "<li>ID: " . $each['id'] . " | " . $each['fullname'] . "</br><button id='bt_appoint" . $each['id'] . "' onclick=\"location.href ='http://$GLOBALS[HOSTNAME]:8080/admin/appoint/" . $each['id'] . "';\">Appoint " . $each['fullname'] . "</button></li></br>";
                     }
                     ?>
 
@@ -83,7 +87,7 @@ foreach ($tanklist as $each){
             
             <div class="admin-item bordered">Add Tank</br></br>
                 <?php $form = ActiveForm::begin([
-                    'id'=> 'tank-form',
+                    'id' => 'tank-form',
                     'layout' => 'horizontal',
                     'action' => ['admin/add-tank'],
                     'fieldConfig' => [
@@ -92,7 +96,7 @@ foreach ($tanklist as $each){
                         'inputOptions' => ['class' => 'col-lg-3 form-control'],
                         'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
                     ],
-                ]); 
+                ]);
                 ?>
                 <?= $form->field($model, 'name')->label('Tank Name')->textInput() ?>
                 <?= $form->field($model, 'desc')->label('Description')->textInput() ?>
@@ -107,9 +111,9 @@ foreach ($tanklist as $each){
                 Update Tank</br></br>
                 <select style="width: 200px; position: absolute; right: 120px;" id='sel_picktank'>
                 <?php
-                    foreach ($tanklist as $each){
-                        echo "<option value='".$each['id']."'>".$each['name']."</option>";
-                    }
+                foreach ($tanklist as $each) {
+                    echo "<option value='" . $each['id'] . "'>" . $each['name'] . "</option>";
+                }
                 ?>
                 </select>
                 <script>
@@ -124,12 +128,12 @@ foreach ($tanklist as $each){
             </br></br>
             Description: <?= $currenttank['desc'] ?></br>
                 Location: <?= $currenttank['location'] ?></br></br>
-                <?= Html::submitButton('Update All Parameters', ['class' => 'btn btn-primary', 'name' => 'updateparam-button', 'id' => 'updateparam','form'=>'param-form']) ?>
+                <?= Html::submitButton('Update All Parameters', ['class' => 'btn btn-primary', 'name' => 'updateparam-button', 'id' => 'updateparam', 'form' => 'param-form']) ?>
                 </br></br><button id="bt_removetank" onclick="confirmRemove()">Delete Tank</button>
                 <script>
                     function confirmRemove(){
                         if (confirm("Delete tank? This will also delete all messages, parameter, logs, and sensors related to this tank.") == true){
-                            location.href ="http://<?= $GLOBALS['HOSTNAME'] ?>:8080/admin/delete/<?= $id?>";
+                            location.href ="http://<?= $GLOBALS['HOSTNAME'] ?>:8080/admin/delete/<?= $id ?>";
                         }
                     }
                 </script>
@@ -139,40 +143,45 @@ foreach ($tanklist as $each){
 
             <div class="admin-item bordered">Add Sensor</br></br>
             <?php $form = ActiveForm::begin([
-                    'id'=> 'sensor-form',
-                    'layout' => 'horizontal',
-                    'action' => ['admin/add-sensor'],
-                    'fieldConfig' => [
-                        'template' => "{label}{input}</br>{error}",
-                        'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
-                        'inputOptions' => ['class' => 'col-lg-3 form-control'],
-                        'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
-                    ],
-                ]); 
-                ?>
+                'id' => 'sensor-form',
+                'layout' => 'horizontal',
+                'action' => ['admin/add-sensor'],
+                'fieldConfig' => [
+                    'template' => "{label}{input}</br>{error}",
+                    'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
+                    'inputOptions' => ['class' => 'col-lg-3 form-control'],
+                    'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
+                ],
+            ]);
+            ?>
                 <?= $form->field($smodel, 'name')->label('Sensor Name')->textInput() ?>
                 <?= $form->field($smodel, 'type')->label('Sensor Type')->dropdownList(
-                    ['0'=>'Fish Tank Sensor','1'=>'Biofilter Sensor','2'=>'Other'],['prompt' => 'Select Type','style' => 'width: 175px;']
+                    ['0' => 'Fish Tank Sensor', '1' => 'Biofilter Sensor', '2' => 'Other'],
+                    ['prompt' => 'Select Type', 'style' => 'width: 175px;']
                 ) ?>
-                <?= $form->field($smodel, 'tank')->label('For Tank')->dropDownList($s_options, ['prompt' => 'Select Tank','style' => 'width: 175px;']) ?> </br>
+                <?= $form->field($smodel, 'tank')->label('For Tank')->dropDownList($s_options, ['prompt' => 'Select Tank', 'style' => 'width: 175px;']) ?> </br>
                 <?= Html::submitButton('Add Sensor', ['class' => 'btn btn-primary', 'name' => 'addsensor-button', 'id' => 'addsensor']) ?>
             <?php ActiveForm::end(); ?>
             </div>
 
 
-            <div class="admin-item bordered admin-select" style="visibility: <?php if (DBHandler::findMaster() == true) {echo "show";} else {echo "hidden";} ?>;">
+            <div class="admin-item bordered admin-select" style="visibility: <?php if (DBHandler::findMaster() == true) {
+                echo "show";
+            } else {
+                echo "hidden";
+            } ?>;">
                 Revoke Admin</br></br>
                 <ul>
                 <?php
-                    foreach ($adminlist as $each){
-                        $id_self = '';
-                        if (Yii::$app->user->identity->id == $each['id']){
-                            $id_self = ' (Yourself)';
-                        }
-                        echo "<li>ID: ".$each['id']." | ".$each['fullname'].$id_self."</br><button id='bt_revoke".$each['id']."' onclick=\"location.href ='http://$GLOBALS[HOSTNAME]:8080/admin/revoke/".$each['id']."';\">Revoke ".$each['fullname'].$id_self."</button></li></br>";
+                foreach ($adminlist as $each) {
+                    $id_self = '';
+                    if (Yii::$app->user->identity->id == $each['id']) {
+                        $id_self = ' (Yourself)';
                     }
+                    echo "<li>ID: " . $each['id'] . " | " . $each['fullname'] . $id_self . "</br><button id='bt_revoke" . $each['id'] . "' onclick=\"location.href ='http://$GLOBALS[HOSTNAME]:8080/admin/revoke/" . $each['id'] . "';\">Revoke " . $each['fullname'] . $id_self . "</button></li></br>";
+                }
 
-                    ?>
+                ?>
                     
                 </ul>
 
@@ -181,19 +190,19 @@ foreach ($tanklist as $each){
             
             <div class="admin-item bordered">pH Level</br></br>
             <?php $form = ActiveForm::begin([
-                    'id'=> 'param-form',
-                    'layout' => 'horizontal',
-                    'action' => ['admin/update-param'],
-                    'fieldConfig' => [
-                        'template' => "{label}{input}</br>{error}",
-                        'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
-                        'inputOptions' => ['class' => 'col-lg-3 form-control'],
-                        'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
-                    ],
-                ]);
-                $pmodel->tank_id = $tankparam['tank_id']; 
-                
-                ?>
+                'id' => 'param-form',
+                'layout' => 'horizontal',
+                'action' => ['admin/update-param'],
+                'fieldConfig' => [
+                    'template' => "{label}{input}</br>{error}",
+                    'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
+                    'inputOptions' => ['class' => 'col-lg-3 form-control'],
+                    'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
+                ],
+            ]);
+            $pmodel->tank_id = $tankparam['tank_id'];
+
+            ?>
                 <?= $form->field($pmodel, 'ph_min')->label('Minimum Value')->textInput(['value' => $tankparam['ph_min']]) ?>
                 <?= $form->field($pmodel, 'ph_max')->label('Maximum Value')->textInput(['value' => $tankparam['ph_max']]) ?>
             </div>
@@ -237,9 +246,11 @@ foreach ($tanklist as $each){
 
 
 
-    <?php $sitename = 'http://'.$GLOBALS['HOSTNAME'].':8080/admin'; ?>
+    <?php $sitename = 'http://' . $GLOBALS['HOSTNAME'] . ':8080/admin'; ?>
     <div class="bottomleftnav" id="navbuttons">
-        <?php if (DBHandler::findAdmin() == true) {echo "<div id='adminbutton' class='navicon' onclick='location.href=\"$sitename\";'>Admin</div>";} ?>
+        <?php if (DBHandler::findAdmin() == true) {
+            echo "<div id='adminbutton' class='navicon' onclick='location.href=\"$sitename\";'>Admin</div>";
+        } ?>
         <div id="homebutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/home';">Home</div>
         <div id="profilebutton" class="navicon" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/profile';">Profile</div>
         <div id="logoutbutton" class="logout" onclick="location.href ='http://<?= $GLOBALS['HOSTNAME'] ?>:8080/logout';">Logout</div>

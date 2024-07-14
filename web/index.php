@@ -8,7 +8,7 @@ require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
 require __DIR__ . '/../vendor/autoload.php';
 
-$_PCENV = 'E:\Downloads\FYP\LI\Aqua Project\phprepo\basic';
+$_PCENV = 'D:\Projects\UMS\LI\Aqua-UMS';
 $_AWSENV = '/home/ec2-user/Aqua-UMS/';
 
 $dotenv = Dotenv\Dotenv::createImmutable($_AWSENV);

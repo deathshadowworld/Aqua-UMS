@@ -8,6 +8,7 @@
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 use app\models\LoginForm;
+
 $model = new LoginForm;
 $this->title = 'Aqua UMS Project';
 ?>
@@ -22,9 +23,9 @@ $this->title = 'Aqua UMS Project';
 <body>
     
     <div style="height:10vh; width:98vw;">
-        <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821207343374417/LOGO_UMS_putih.png" style="max-height: 9vh;"></span>
+        <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821207343374417/LOGO_UMS_putih.png?ex=6684c0b4&is=66836f34&hm=af5e9a87bb0dda7b341400235baa3f8d9323dbd3c0657ee6275dae95cea2b05e&" style="max-height: 9vh;"></span>
         <span class="header"><b style="font-size: 30px;">Aqua UMS Project</b></br>Kerjasama Fakulti Komputeran dan Informatik dan Institut Penyelidikan Marin Borneo</span>
-        <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821361966387350/EcoCampus-Putih.png" style="max-height: 9vh;"></span>
+        <span class="header"><img src="https://cdn.discordapp.com/attachments/616833107965771776/1094821361966387350/EcoCampus-Putih.png?ex=6684c0d9&is=66836f59&hm=0fb2dbcc577308974208e89d2c2f8e6a39d4e87ff5822c27cb66677cb01fe47b&" style="max-height: 9vh;"></span>
         
     </div>
 
@@ -35,16 +36,16 @@ $this->title = 'Aqua UMS Project';
         <div class="loginwindow" style="padding-top:50px;">
         <h1>Login</h1>
         <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'layout' => 'horizontal',
-        'action' => ['login/login'],
-        'fieldConfig' => [
-            'template' => "<h3>{label}</h3>{input}</br></br>{error}",
-            'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
-            'inputOptions' => ['class' => 'col-lg-3 form-control'],
-            'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
-        ],
-    ]); ?>
+            'id' => 'login-form',
+            'layout' => 'horizontal',
+            'action' => ['login/login'],
+            'fieldConfig' => [
+                'template' => "<h3>{label}</h3>{input}</br></br>{error}",
+                'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
+                'inputOptions' => ['class' => 'col-lg-3 form-control'],
+                'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
+            ],
+        ]); ?>
 
         <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 

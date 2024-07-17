@@ -71,7 +71,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public static function findByUsername($username)
     {
-        $host = '47.129.49.192';
+        $host = 'localhost';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';

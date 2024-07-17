@@ -26,7 +26,7 @@ class DBHandler
     public static function getUser()
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -58,7 +58,7 @@ class DBHandler
     public static function getOrg()
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -90,7 +90,7 @@ class DBHandler
     public static function getAssoc()
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -122,7 +122,7 @@ class DBHandler
     public static function getTank()
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -153,7 +153,7 @@ class DBHandler
     public static function getSensor()
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -181,7 +181,7 @@ class DBHandler
     public static function findSensor($id)
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -198,7 +198,7 @@ class DBHandler
     public static function getMessage()
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -230,7 +230,7 @@ class DBHandler
     public static function getLog()
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -262,7 +262,7 @@ class DBHandler
     public static function getParam()
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -312,7 +312,7 @@ class DBHandler
     #############################
     public static function getAdmins()
     {
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -326,7 +326,7 @@ class DBHandler
     }
     public static function getNonAdmins()
     {
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -343,7 +343,7 @@ class DBHandler
     public static function getUserIDs()
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -363,7 +363,7 @@ class DBHandler
     public static function getTankIDs()
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -383,7 +383,7 @@ class DBHandler
     public static function getSensorIDs()
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -403,7 +403,7 @@ class DBHandler
     public static function getMessageIDs()
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -423,7 +423,7 @@ class DBHandler
     public static function getLogIDs()
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -443,7 +443,7 @@ class DBHandler
 
     public static function getUsernamebyID($id)
     {
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -457,7 +457,7 @@ class DBHandler
     }
     public static function getUsernamesbyID()
     {
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -617,7 +617,7 @@ class DBHandler
         $authkey = 'key-' . $id . '-auth';
         $token = 'token-' . $id . '-access';
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -636,7 +636,7 @@ class DBHandler
         $location = $tank['location'];
         $id = self::generateTankID();
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -691,7 +691,7 @@ class DBHandler
         $tank = $new['tank'];
         $id = self::generateSensorID();
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -719,7 +719,7 @@ class DBHandler
         $id = self::generateLogID();
         $tank_id = self::findTankforSensor($sensor_id);
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -746,7 +746,7 @@ class DBHandler
     public static function findTankforSensor($value)
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -763,7 +763,7 @@ class DBHandler
     public static function findUser($value)
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -797,7 +797,7 @@ class DBHandler
 
     public static function findAdminbyID($id)
     {
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -817,7 +817,7 @@ class DBHandler
     public static function findTankSensors($id)
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -833,7 +833,7 @@ class DBHandler
     public static function findTankParam($id)
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -849,7 +849,7 @@ class DBHandler
     public static function findSensorLogs($id)
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -871,7 +871,7 @@ class DBHandler
     public static function findParam($value)
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -888,7 +888,7 @@ class DBHandler
 
     public static function updateParam($tank)
     {
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -924,7 +924,7 @@ class DBHandler
     public static function sortedMessages($id)
     {
         #####
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -960,7 +960,7 @@ class DBHandler
 
     public static function addAdmin($id)
     {
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -977,7 +977,7 @@ class DBHandler
 
     public static function removeAdmin($id)
     {
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -996,7 +996,7 @@ class DBHandler
 
     public static function updateUser($arr)
     {
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -1013,7 +1013,7 @@ class DBHandler
 
     public static function updatePassword($arr)
     {
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
@@ -1032,7 +1032,7 @@ class DBHandler
 
     public static function deleteTank($id)
     {
-        $host = 'localhost:5432';
+        $host = '47.129.49.192';
         $port = '5432';
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';

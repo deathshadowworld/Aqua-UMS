@@ -622,9 +622,12 @@ class DBHandler
         $dbname = 'aquaums';
         $dbusername = 'ec2-user';
         $dbpassword = self::getDBPassword();
+        echo "Attempting to connect";
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");
+        echo "Connext success";
         $query = "INSERT INTO \"user\" (id,username,password,fullname,email,admin,authkey,accesstoken) VALUES (" . $id . ",'" . $username . "','" . $password . "','" . $fullname . "','" . $email . "',false,'" . $authkey . "','" . $token . "');";
         $result = pg_query($connection, $query);
+        echo "Query success";
         pg_close($connection);
         return $result;
     }

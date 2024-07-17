@@ -11,7 +11,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $_PCENV = 'D:\Projects\UMS\LI\Aqua-UMS';
 $_AWSENV = '/home/ec2-user/Aqua-UMS/';
 
-$dotenv = Dotenv\Dotenv::createImmutable($_AWSENV);
+$dotenv = Dotenv\Dotenv::createImmutable($_PCENV);
 $dotenv->load();
 
 $GLOBALS['HOSTNAME'] = $_ENV['HOSTNAME'];

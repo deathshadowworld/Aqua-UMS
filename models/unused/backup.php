@@ -1,7 +1,9 @@
 <?php
 
 namespace app\models;
+
 use app\models\databasehandler;
+
 class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
 {
     public $id;
@@ -10,7 +12,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public $authKey;
     public $accessToken;
 
-    
+
     private static $dummy = [
         '100' => [
             'id' => '100',
@@ -33,17 +35,17 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
         ],
     ];
 
-    
 
-    private static $users ;
 
-    
+    private static $users;
+
+
     /**
      * {@inheritdoc}
      */
     public static function findIdentity($id)
     {
-        
+
         return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
     }
 
@@ -69,33 +71,32 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public static function findByUsername($username)
     {
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = 'u0mA7l6HJ60EgYH1nY5hzr5A422reYdL';
-    
+
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
-    
+
         if (!$connection) {
             die('Database connection failed: ' . pg_last_error());
         }
-    
+
         $query = "SELECT id, username, password, authkey, accesstoken FROM \"user\" WHERE username = '$username'";
         $result = pg_query($connection, $query);
 
         $row = pg_fetch_assoc($result);
-        if (isset($row)){
+        if (isset($row)) {
             return new static($row);
-        }
-        else {
+        } else {
             return null;
         }
 
-    
+
 
     }
-    
+
 
     /**
      * {@inheritdoc}

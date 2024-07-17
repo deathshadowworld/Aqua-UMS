@@ -1,18 +1,21 @@
 <?php
 
 namespace app\models;
+
 use Yii;
+
 class DBHandler
 {
 
-    public static function getDBPassword(){
+    public static function getDBPassword()
+    {
         return $_ENV['DB_Password'];
     }
 
     public function __construct()
-    {   
-        
-        }
+    {
+
+    }
     #############################
     #                           #
     #                           #
@@ -20,22 +23,23 @@ class DBHandler
     #                           #
     #                           #
     #############################
-    public static function getUser() {
+    public static function getUser()
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         ####
         $query = "SELECT * FROM \"user\";";
         ####
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         $listresult = array();
-        foreach ($list as $each){
-            $listresult[(string)$each['id']] = [
+        foreach ($list as $each) {
+            $listresult[(string) $each['id']] = [
                 ########
                 'id' => $each['id'],
                 'username' => $each['username'],
@@ -51,22 +55,23 @@ class DBHandler
         pg_close($connection);
         return $listresult;
     }
-    public static function getOrg() {
+    public static function getOrg()
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         ####
         $query = "SELECT * FROM \"organization\";";
         ####
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         $listresult = array();
-        foreach ($list as $each){
-            $listresult[(string)$each['id']] = [
+        foreach ($list as $each) {
+            $listresult[(string) $each['id']] = [
                 ########
                 'id' => $each['id'],
                 'username' => $each['username'],
@@ -82,22 +87,23 @@ class DBHandler
         pg_close($connection);
         return $listresult;
     }
-    public static function getAssoc() {
+    public static function getAssoc()
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         ####
         $query = "SELECT * FROM \"association\";";
         ####
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         $listresult = array();
-        foreach ($list as $each){
-            $listresult[(string)$each['id']] = [
+        foreach ($list as $each) {
+            $listresult[(string) $each['id']] = [
                 ########
                 'id' => $each['id'],
                 'username' => $each['username'],
@@ -113,21 +119,22 @@ class DBHandler
         pg_close($connection);
         return $listresult;
     }
-    public static function getTank() {
+    public static function getTank()
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         ####
         $query = "SELECT * FROM \"tank\";";
         ####
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         $listresult = array();
-        foreach ($list as $each){
+        foreach ($list as $each) {
             $listresult[] = [
                 ########
                 'id' => $each['tank_id'],
@@ -138,26 +145,27 @@ class DBHandler
             ];
         }
 
-        
+
         pg_close($connection);
         return $listresult;
     }
 
-    public static function getSensor() {
+    public static function getSensor()
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         ####
         $query = "SELECT * FROM \"sensor\";";
         ####
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         $listresult = array();
-        foreach ($list as $each){
+        foreach ($list as $each) {
             $listresult[] = [
                 ########
                 'id' => $each['sensor_id'],
@@ -170,14 +178,15 @@ class DBHandler
         return $listresult;
     }
 
-    public static function findSensor($id) {
+    public static function findSensor($id)
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         ####
         $query = "SELECT * FROM \"sensor\" WHERE sensor_id = $id";
         ####
@@ -186,22 +195,23 @@ class DBHandler
         pg_close($connection);
         return $list;
     }
-    public static function getMessage() {
+    public static function getMessage()
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         ####
         $query = "SELECT * FROM \"message\";";
         ####
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         $listresult = array();
-        foreach ($list as $each){
-            $listresult[(string)$each['id']] = [
+        foreach ($list as $each) {
+            $listresult[(string) $each['id']] = [
                 ########
                 'id' => $each['id'],
                 'username' => $each['username'],
@@ -217,22 +227,23 @@ class DBHandler
         pg_close($connection);
         return $listresult;
     }
-    public static function getLog() {
+    public static function getLog()
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         ####
         $query = "SELECT * FROM \"waterlog\";";
         ####
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         $listresult = array();
-        foreach ($list as $each){
-            $listresult[(string)$each['id']] = [
+        foreach ($list as $each) {
+            $listresult[(string) $each['id']] = [
                 ########
                 'id' => $each['id'],
                 'username' => $each['username'],
@@ -248,21 +259,22 @@ class DBHandler
         pg_close($connection);
         return $listresult;
     }
-    public static function getParam() {
+    public static function getParam()
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         ####
         $query = "SELECT * FROM \"parameter\";";
         ####
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         $listresult = array();
-        foreach ($list as $each){
+        foreach ($list as $each) {
             $listresult[] = [
                 ########
                 'id' => $each['tank_id'],
@@ -283,7 +295,7 @@ class DBHandler
                 'depth_min' => $each['depth_min'],
                 'depth_max' => $each['depth_max'],
                 'cycle_length' => $each['cycle_length'],
-                                
+
                 ########
             ];
         }
@@ -298,155 +310,164 @@ class DBHandler
     #                           #
     #                           #
     #############################
-    public static function getAdmins(){
-        $host = 'satao.db.elephantsql.com';
+    public static function getAdmins()
+    {
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         $query = "SELECT id,fullname FROM \"user\" WHERE admin = true;";
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         pg_close($connection);
         return $list;
     }
-    public static function getNonAdmins(){
-        $host = 'satao.db.elephantsql.com';
+    public static function getNonAdmins()
+    {
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         $query = "SELECT id,fullname FROM \"user\" WHERE admin = false;";
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         pg_close($connection);
         return $list;
     }
-    
 
-    public static function getUserIDs(){
+
+    public static function getUserIDs()
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         $query = "SELECT id FROM \"user\";";
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         #####
         $idlist = array();
-        foreach ($list as $each){
-            $idlist[] = $each['id'].'';
+        foreach ($list as $each) {
+            $idlist[] = $each['id'] . '';
         }
         pg_close($connection);
         return $idlist;
     }
-    public static function getTankIDs(){
+    public static function getTankIDs()
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         $query = "SELECT tank_id FROM \"tank\";";
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         #####
         $idlist = array();
-        foreach ($list as $each){
-            $idlist[] = $each['tank_id'].'';
+        foreach ($list as $each) {
+            $idlist[] = $each['tank_id'] . '';
         }
         pg_close($connection);
         return $idlist;
     }
-    public static function getSensorIDs(){
+    public static function getSensorIDs()
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         $query = "SELECT sensor_id FROM \"sensor\";";
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         #####
         $idlist = array();
-        foreach ($list as $each){
-            $idlist[] = $each['sensor_id'].'';
+        foreach ($list as $each) {
+            $idlist[] = $each['sensor_id'] . '';
         }
         pg_close($connection);
         return $idlist;
     }
-    public static function getMessageIDs(){
+    public static function getMessageIDs()
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         $query = "SELECT message_id FROM \"message\";";
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         #####
         $idlist = array();
-        foreach ($list as $each){
-            $idlist[] = $each['message_id'].'';
+        foreach ($list as $each) {
+            $idlist[] = $each['message_id'] . '';
         }
         pg_close($connection);
         return $idlist;
     }
-    public static function getLogIDs(){
+    public static function getLogIDs()
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         $query = "SELECT log_id FROM \"waterlog\";";
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         #####
         $idlist = array();
-        foreach ($list as $each){
-            $idlist[] = $each['log_id'].'';
+        foreach ($list as $each) {
+            $idlist[] = $each['log_id'] . '';
         }
         pg_close($connection);
         return $idlist;
     }
 
-    public static function getUsernamebyID($id){
-        $host = 'satao.db.elephantsql.com';
+    public static function getUsernamebyID($id)
+    {
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         $query = "SELECT username FROM \"user\" WHERE id = $id;";
         $result = pg_query($connection, $query);
         $list = pg_fetch_assoc($result)['username'];
         pg_close($connection);
         return $list;
     }
-    public static function getUsernamesbyID(){
-        $host = 'satao.db.elephantsql.com';
+    public static function getUsernamesbyID()
+    {
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         $query = "SELECT username FROM \"user\";";
         $result = pg_query($connection, $query);
         $list = pg_fetch_all($result);
         $idlist = array();
-        foreach($list as $each){
+        foreach ($list as $each) {
             $idlist[] = $each['username'];
         }
 
@@ -454,80 +475,81 @@ class DBHandler
         return $idlist;
     }
 
-    public static function searchUsernameDuplicate($name){
+    public static function searchUsernameDuplicate($name)
+    {
         $list = self::getUsernamesbyID();
-        foreach ($list as $each){
-            if ($name == $each){
+        foreach ($list as $each) {
+            if ($name == $each) {
                 return false;
             }
         }
         return true;
     }
 
-    public static function generateUserID(){
+    public static function generateUserID()
+    {
         $list = DBHandler::getUserIDs();
-        $id = mt_rand(100000, 999999).'';
+        $id = mt_rand(100000, 999999) . '';
         $__id = false;
         $__stop = true;
-        while ($__stop){
-            foreach ($list as $each){
-                if ($id == $each){
+        while ($__stop) {
+            foreach ($list as $each) {
+                if ($id == $each) {
                     $__id = true;
                 } else {
                     $__id = false;
                 }
             }
-            if ($__id){
-                $id = mt_rand(100000, 999999).'';
-            }
-            else {
-                
+            if ($__id) {
+                $id = mt_rand(100000, 999999) . '';
+            } else {
+
                 $__stop = false;
             }
         }
         return $id;
     }
-    public static function generateTankID(){
+    public static function generateTankID()
+    {
         $list = DBHandler::getTankIDs();
-        $id = mt_rand(100000, 999999).'';
+        $id = mt_rand(100000, 999999) . '';
         $__id = false;
         $__stop = true;
-        while ($__stop){
-            foreach ($list as $each){
-                if ($id == $each){
+        while ($__stop) {
+            foreach ($list as $each) {
+                if ($id == $each) {
                     $__id = true;
                 } else {
                     $__id = false;
                 }
             }
-            if ($__id){
-                $id = mt_rand(100000, 999999).'';
-            }
-            else {
-                
+            if ($__id) {
+                $id = mt_rand(100000, 999999) . '';
+            } else {
+
                 $__stop = false;
             }
         }
         return $id;
     }
-    public static function generateSensorID(){
+    public static function generateSensorID()
+    {
         $list = DBHandler::getSensorIDs();
-        $id = mt_rand(100000, 999999).'';
+        $id = mt_rand(100000, 999999) . '';
         $__id = false;
         $__stop = true;
-        while ($__stop){
-            foreach ($list as $each){
-                if ($id == $each){
+        while ($__stop) {
+            foreach ($list as $each) {
+                if ($id == $each) {
                     $__id = true;
                 } else {
                     $__id = false;
                 }
             }
-            if ($__id){
-                $id = mt_rand(100000, 999999).'';
-            }
-            else {
-                
+            if ($__id) {
+                $id = mt_rand(100000, 999999) . '';
+            } else {
+
                 $__stop = false;
             }
         }
@@ -536,92 +558,94 @@ class DBHandler
 
 
 
-    public static function generateLogID(){
+    public static function generateLogID()
+    {
         $list = DBHandler::getLogIDs();
-        $id = mt_rand(100000, 999999).'';
+        $id = mt_rand(100000, 999999) . '';
         $__id = false;
         $__stop = true;
-        while ($__stop){
-            foreach ($list as $each){
-                if ($id == $each){
+        while ($__stop) {
+            foreach ($list as $each) {
+                if ($id == $each) {
                     $__id = true;
                 } else {
                     $__id = false;
                 }
             }
-            if ($__id){
-                $id = mt_rand(100000, 999999).'';
-            }
-            else {
-                
+            if ($__id) {
+                $id = mt_rand(100000, 999999) . '';
+            } else {
+
                 $__stop = false;
             }
         }
         return $id;
     }
 
-    public static function generateMessageID(){
+    public static function generateMessageID()
+    {
         $list = DBHandler::getMessageIDs();
-        $id = mt_rand(100000, 999999).'';
+        $id = mt_rand(100000, 999999) . '';
         $__id = false;
         $__stop = true;
-        while ($__stop){
-            foreach ($list as $each){
-                if ($id == $each){
+        while ($__stop) {
+            foreach ($list as $each) {
+                if ($id == $each) {
                     $__id = true;
                 } else {
                     $__id = false;
                 }
             }
-            if ($__id){
-                $id = mt_rand(100000, 999999).'';
-            }
-            else {
-                
+            if ($__id) {
+                $id = mt_rand(100000, 999999) . '';
+            } else {
+
                 $__stop = false;
             }
         }
         return $id;
     }
-    
-    public static function addUser($user) {
-        
+
+    public static function addUser($user)
+    {
+
         $username = $user->username;
         $password = hash('sha256', $user->password);
         $fullname = $user->fullname;
-        $email = $user->email;        
+        $email = $user->email;
         $id = self::generateUserID();
-        $authkey = 'key-'.$id.'-auth';
-        $token = 'token-'.$id.'-access';
+        $authkey = 'key-' . $id . '-auth';
+        $token = 'token-' . $id . '-access';
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $dbpassword = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");  
-        $query = "INSERT INTO \"user\" (id,username,password,fullname,email,admin,authkey,accesstoken) VALUES (".$id.",'".$username."','".$password."','".$fullname."','".$email."',false,'".$authkey."','".$token."');";
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");
+        $query = "INSERT INTO \"user\" (id,username,password,fullname,email,admin,authkey,accesstoken) VALUES (" . $id . ",'" . $username . "','" . $password . "','" . $fullname . "','" . $email . "',false,'" . $authkey . "','" . $token . "');";
         $result = pg_query($connection, $query);
         pg_close($connection);
         return $result;
     }
 
-    public static function addTank($tank) {
+    public static function addTank($tank)
+    {
         $name = $tank['name'];
         $desc = $tank['desc'];
         $location = $tank['location'];
         $id = self::generateTankID();
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $dbpassword = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");  
-        $query = "INSERT INTO \"tank\" (tank_id,name,description,location,org_id) VALUES (".$id.",'".$name."','".$desc."','".$location."',0);";
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");
+        $query = "INSERT INTO \"tank\" (tank_id,name,description,location,org_id) VALUES (" . $id . ",'" . $name . "','" . $desc . "','" . $location . "',0);";
         $resulttank = pg_query($connection, $query);
         pg_close($connection);
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");
         $query = "INSERT INTO \"parameter\" 
         (tank_id,ph_min,
         ph_max,
@@ -644,42 +668,44 @@ class DBHandler
             $id,6,8,0,0,0,0,0,0,0,0,0,0,23,30,0,0,60
         );";
         $result = pg_query($connection, $query);
-        $mid = $id+1;
-        $mid2 = $mid+1;
-        $mid3 = $mid2+1;
+        $mid = $id + 1;
+        $mid2 = $mid + 1;
+        $mid3 = $mid2 + 1;
         $query = "INSERT INTO \"message\" (message_id,type,tank_id,time_posted,content) VALUES 
         ($mid,  0, $id, NOW(), 'Warning Content'),
         ($mid2, 1, $id, NOW(), 'Sensor Content'),
         ($mid3, 2, $id, NOW(), 'Forecast Content')";
-        pg_query ($connection, $query);
+        pg_query($connection, $query);
 
-        
+
         pg_close($connection);
         return $resulttank;
     }
 
 
 
-    public static function addSensor($new) {
+    public static function addSensor($new)
+    {
         $name = $new['name'];
         $type = $new['type'];
         $tank = $new['tank'];
         $id = self::generateSensorID();
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $dbpassword = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");  
-        $query = "INSERT INTO \"sensor\" (sensor_id,tank_id,name,type) VALUES (".$id.",'".$tank."','".$name."','".$type."');";
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");
+        $query = "INSERT INTO \"sensor\" (sensor_id,tank_id,name,type) VALUES (" . $id . ",'" . $tank . "','" . $name . "','" . $type . "');";
         $result = pg_query($connection, $query);
         pg_close($connection);
         return $id;
     }
 
-    public static function addLog($new) {
-        $sensor_id =$new['sensor_id'];
+    public static function addLog($new)
+    {
+        $sensor_id = $new['sensor_id'];
         $datetime = $new['datetime'];
         $ph = $new['ph'];
         $do = $new['do'];
@@ -693,18 +719,18 @@ class DBHandler
         $id = self::generateLogID();
         $tank_id = self::findTankforSensor($sensor_id);
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $dbpassword = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");
         $query = "INSERT INTO \"waterlog\" (log_id,sensor_id,time_taken,\"pH\",\"Do\",salinity,ammonia, nitrate, turbidity,temp,depth,type) VALUES 
-        (".$id.",'".$sensor_id."','".$datetime."','".$ph."','".$do."','".$sal."','".$amm."','".$nit."','".$tur."','".$temp."','".$dep."','".$type."');";
+        (" . $id . ",'" . $sensor_id . "','" . $datetime . "','" . $ph . "','" . $do . "','" . $sal . "','" . $amm . "','" . $nit . "','" . $tur . "','" . $temp . "','" . $dep . "','" . $type . "');";
         $result = pg_query($connection, $query);
         $query = "INSERT INTO \"message\" (message_id,type,tank_id,time_posted,content) VALUES 
         ($id,  1, $tank_id, NOW(), 'Data is collected.')";
-        pg_query ($connection, $query);
+        pg_query($connection, $query);
 
         pg_close($connection);
         return $result;
@@ -717,30 +743,32 @@ class DBHandler
     #                           #
     #############################
 
-public static function findTankforSensor($value){
-    #####
-    $host = 'satao.db.elephantsql.com';
-    $port = '5432';
-    $dbname = 'dxtshkjc';
-    $dbusername = 'dxtshkjc';
-    $password = self::getDBPassword();
-    $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
-    #####
-    $query = "SELECT tank_id FROM \"sensor\" WHERE sensor_id = '$value';";
+    public static function findTankforSensor($value)
+    {
+        #####
+        $host = 'localhost:5432';
+        $port = '5432';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
+        $password = self::getDBPassword();
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
+        #####
+        $query = "SELECT tank_id FROM \"sensor\" WHERE sensor_id = '$value';";
         $result = pg_query($connection, $query);
         $row = pg_fetch_assoc($result);
         pg_close($connection);
         return $row['tank_id'];
-}
+    }
 
-    public static function findUser($value) {
+    public static function findUser($value)
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         #####
         $query = "SELECT * FROM \"user\" WHERE username = '$value';";
         $result = pg_query($connection, $query);
@@ -748,66 +776,69 @@ public static function findTankforSensor($value){
         return $row;
     }
 
-    public static function findAdmin(){
+    public static function findAdmin()
+    {
         $user = self::findUser(Yii::$app->user->identity->username);
-        if (Yii::$app->user->identity->admin == 't'){
+        if (Yii::$app->user->identity->admin == 't') {
             return true;
-        }
-        else {
-            return false; 
+        } else {
+            return false;
         }
     }
 
-    public static function findMaster(){
-        if (Yii::$app->user->identity->id == '815121'){
+    public static function findMaster()
+    {
+        if (Yii::$app->user->identity->id == '815121') {
             return true;
-        }
-        else {
-            return false; 
+        } else {
+            return false;
         }
     }
 
-    public static function findAdminbyID($id){
-        $host = 'satao.db.elephantsql.com';
+    public static function findAdminbyID($id)
+    {
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = DBHandler::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         $query = "SELECT admin FROM \"user\" WHERE id = '$id';";
         $result = pg_query($connection, $query);
         $row = pg_fetch_assoc($result);
-        if ($row){
-            if ($row['admin'] == 't'){
+        if ($row) {
+            if ($row['admin'] == 't') {
                 return true;
             }
         }
         return false;
     }
 
-    public static function findTankSensors($id){
-         #####
-         $host = 'satao.db.elephantsql.com';
-         $port = '5432';
-         $dbname = 'dxtshkjc';
-         $dbusername = 'dxtshkjc';
-         $password = self::getDBPassword();
-         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
-         #####
-         $query = "SELECT sensor_id FROM \"sensor\" WHERE tank_id = '$id';";
-         $result = pg_query($connection, $query);
-         $list = pg_fetch_all($result);
-         return $list;
+    public static function findTankSensors($id)
+    {
+        #####
+        $host = 'localhost:5432';
+        $port = '5432';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
+        $password = self::getDBPassword();
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
+        #####
+        $query = "SELECT sensor_id FROM \"sensor\" WHERE tank_id = '$id';";
+        $result = pg_query($connection, $query);
+        $list = pg_fetch_all($result);
+        return $list;
     }
 
-    public static function findTankParam($id){
+    public static function findTankParam($id)
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         #####
         $query = "SELECT * FROM \"parameter\" WHERE tank_id = '$id';";
         $result = pg_query($connection, $query);
@@ -815,18 +846,19 @@ public static function findTankforSensor($value){
         return $list;
     }
 
-    public static function findSensorLogs($id){
+    public static function findSensorLogs($id)
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         #####
         $sensors = self::findTankSensors($id);
         $loglist = array();
-        foreach ($sensors as $each){
+        foreach ($sensors as $each) {
             $query = "SELECT * FROM \"waterlog\" WHERE sensor_id = $each[sensor_id];";
             $result = pg_query($connection, $query);
             $list = pg_fetch_all($result);
@@ -836,14 +868,15 @@ public static function findTankforSensor($value){
         return $loglist;
     }
 
-    public static function findParam($value){
+    public static function findParam($value)
+    {
         #####
-        $host = 'satao.db.elephantsql.com';
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         ####
         $query = "SELECT * FROM \"parameter\" WHERE tank_id = $value;";
         ####
@@ -853,13 +886,14 @@ public static function findTankforSensor($value){
         return $list;
     }
 
-    public static function updateParam($tank){
-        $host = 'satao.db.elephantsql.com';
+    public static function updateParam($tank)
+    {
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         ####
         $query = "UPDATE \"parameter\" SET 
         ph_min = $tank[ph_min],
@@ -887,52 +921,51 @@ public static function findTankforSensor($value){
         return $list;
     }
 
-public static function sortedMessages($id){
-    #####
-    $host = 'satao.db.elephantsql.com';
-    $port = '5432';
-    $dbname = 'dxtshkjc';
-    $dbusername = 'dxtshkjc';
-    $password = self::getDBPassword();
-    $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
-    #####
-    $query = "SELECT * FROM \"message\" WHERE tank_id = '$id';";
-    $result = pg_query($connection, $query);
-    $list = pg_fetch_all($result);
-    $warning = array();
-    $sensor = array();
-    $forecast = array();
-    $other = array();
-    foreach($list as $each){
-        if ($each['type'] == '0'){
-            $warning[] = $each;
-        }
-        elseif ($each['type'] == '1'){
-            $sensor[] = $each;
-        }
-        elseif ($each['type'] == '2'){
-            $forecast[] = $each;
-        }
-        else {
-            $other[] = $each;
-        }
-    }
-    $messages = [
-        'warning' => $warning,
-        'sensor' => $sensor,
-        'forecast' => $forecast,
-        'other' => $other,
-        ];
-    return $messages;
-}
-
-    public static function addAdmin ($id){
-        $host = 'satao.db.elephantsql.com';
+    public static function sortedMessages($id)
+    {
+        #####
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
+        #####
+        $query = "SELECT * FROM \"message\" WHERE tank_id = '$id';";
+        $result = pg_query($connection, $query);
+        $list = pg_fetch_all($result);
+        $warning = array();
+        $sensor = array();
+        $forecast = array();
+        $other = array();
+        foreach ($list as $each) {
+            if ($each['type'] == '0') {
+                $warning[] = $each;
+            } elseif ($each['type'] == '1') {
+                $sensor[] = $each;
+            } elseif ($each['type'] == '2') {
+                $forecast[] = $each;
+            } else {
+                $other[] = $each;
+            }
+        }
+        $messages = [
+            'warning' => $warning,
+            'sensor' => $sensor,
+            'forecast' => $forecast,
+            'other' => $other,
+        ];
+        return $messages;
+    }
+
+    public static function addAdmin($id)
+    {
+        $host = 'localhost:5432';
+        $port = '5432';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
+        $password = self::getDBPassword();
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         ####
         $query = "UPDATE \"user\" SET admin = true WHERE id = $id;";
         ####
@@ -942,13 +975,14 @@ public static function sortedMessages($id){
         return $list;
     }
 
-    public static function removeAdmin ($id){
-        $host = 'satao.db.elephantsql.com';
+    public static function removeAdmin($id)
+    {
+        $host = 'localhost:5432';
         $port = '5432';
-        $dbname = 'dxtshkjc';
-        $dbusername = 'dxtshkjc';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
         $password = self::getDBPassword();
-        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
         ####
         $query = "UPDATE \"user\" SET admin = false WHERE id = $id;";
         ####
@@ -960,68 +994,71 @@ public static function sortedMessages($id){
 
 
 
-public static function updateUser($arr){
-    $host = 'satao.db.elephantsql.com';
-    $port = '5432';
-    $dbname = 'dxtshkjc';
-    $dbusername = 'dxtshkjc';
-    $password = self::getDBPassword();
-    $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
-    ####
-    $query = "UPDATE \"user\" SET fullname = '$arr[fullname]', email = '$arr[email]' WHERE username = '$arr[username]';";
-    ####
-    $result = pg_query($connection, $query);
-    $list = pg_fetch_assoc($result);
-    pg_close($connection);
-    return $list;
-}
+    public static function updateUser($arr)
+    {
+        $host = 'localhost:5432';
+        $port = '5432';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
+        $password = self::getDBPassword();
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
+        ####
+        $query = "UPDATE \"user\" SET fullname = '$arr[fullname]', email = '$arr[email]' WHERE username = '$arr[username]';";
+        ####
+        $result = pg_query($connection, $query);
+        $list = pg_fetch_assoc($result);
+        pg_close($connection);
+        return $list;
+    }
 
-public static function updatePassword($arr){
-    $host = 'satao.db.elephantsql.com';
-    $port = '5432';
-    $dbname = 'dxtshkjc';
-    $dbusername = 'dxtshkjc';
-    $password = self::getDBPassword();
-    $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
-    $hashed = hash('sha256', $arr['password']);
-    ####
-    $query = "UPDATE \"user\" SET password = '$hashed' WHERE username = '$arr[username]';";
-    ####
-    $result = pg_query($connection, $query);
-    $list = pg_fetch_assoc($result);
-    pg_close($connection);
-    return $list;
-}
+    public static function updatePassword($arr)
+    {
+        $host = 'localhost:5432';
+        $port = '5432';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
+        $password = self::getDBPassword();
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
+        $hashed = hash('sha256', $arr['password']);
+        ####
+        $query = "UPDATE \"user\" SET password = '$hashed' WHERE username = '$arr[username]';";
+        ####
+        $result = pg_query($connection, $query);
+        $list = pg_fetch_assoc($result);
+        pg_close($connection);
+        return $list;
+    }
 
 
-public static function deleteTank($id){
-    $host = 'satao.db.elephantsql.com';
-    $port = '5432';
-    $dbname = 'dxtshkjc';
-    $dbusername = 'dxtshkjc';
-    $password = self::getDBPassword();
-    $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");  
+    public static function deleteTank($id)
+    {
+        $host = 'localhost:5432';
+        $port = '5432';
+        $dbname = 'aquaums';
+        $dbusername = 'ec2-user';
+        $password = self::getDBPassword();
+        $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$password");
 
-    $query = "DELETE FROM parameter WHERE tank_id = $id;";
-    pg_query($connection,$query);
+        $query = "DELETE FROM parameter WHERE tank_id = $id;";
+        pg_query($connection, $query);
 
-    $query = "DELETE FROM message WHERE tank_id = $id;";
-    pg_query($connection,$query);
+        $query = "DELETE FROM message WHERE tank_id = $id;";
+        pg_query($connection, $query);
 
-    $query = "DELETE FROM waterlog
+        $query = "DELETE FROM waterlog
     WHERE sensor_id IN (
         SELECT sensor_id
         FROM sensor
         WHERE tank_id = $id);";
-    pg_query($connection,$query);
+        pg_query($connection, $query);
 
-    $query = "DELETE FROM sensor
+        $query = "DELETE FROM sensor
     WHERE tank_id = $id;";
-    pg_query($connection,$query);
+        pg_query($connection, $query);
 
-    $query = "DELETE FROM tank WHERE tank_id = $id;";
-    pg_query($connection,$query);
-    return true;
-}
+        $query = "DELETE FROM tank WHERE tank_id = $id;";
+        pg_query($connection, $query);
+        return true;
+    }
 
 }

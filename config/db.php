@@ -2,7 +2,7 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'pgsql:host=satao.db.elephantsql.com;port=5432;dbname=dxtshkjc',
+    'dsn' => 'pgsql:host=localhost:5432;port=5432;dbname=dxtshkjc',
     'username' => 'dxtshkjc',
     'password' => $_ENV['DB_Password'],
     'charset' => 'utf8',

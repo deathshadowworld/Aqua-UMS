@@ -26,7 +26,7 @@ class AppAsset extends AssetBundle
         #'https://cdn.discordapp.com/attachments/616833107965771776/1257583325871079555/styles.css?ex=6684ef3d&is=66839dbd&hm=e5b236d68ceba80128f20bf1993fd7413898a0ff2bbcc04bdb727de659b9e95a&',
     ];
     public $js = [
-        'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.1/chart.min.js',
+        'https://cdn.jsdelivr.net/npm/chart.js',
         'https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js',
         #'assets/script.js',
         'css/script.js',

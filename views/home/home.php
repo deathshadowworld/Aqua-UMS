@@ -53,8 +53,8 @@ try {
     $type1 = array();
     foreach ($sensor1 as $each) {
         $type1[$each['time_taken']] = [
-            'ph' => $each['pH'],
-            'do' => strval(intval($each['Do']) / 100),
+            'ph' => $each['ph'],
+            'do' => strval(intval($each['do']) / 100),
             'salinity' => $each['salinity'],
             'ammonia' => $each['ammonia'],
             'nitrate' => $each['nitrate'],
@@ -64,11 +64,12 @@ try {
             'type' => $each['type'],
         ];
     }
+
     $type2 = array();
     foreach ($sensor2 as $each) {
         $type2[$each['time_taken']] = [
-            'ph' => $each['pH'],
-            'do' => strval(intval($each['Do']) / 100),
+            'ph' => $each['ph'],
+            'do' => strval(intval($each['do']) / 100),
             'salinity' => $each['salinity'],
             'ammonia' => $each['ammonia'],
             'nitrate' => $each['nitrate'],

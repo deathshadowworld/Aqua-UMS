@@ -41,6 +41,7 @@ $this->title = 'Aqua UMS Project';
     <div class="mainscreen" style="display: block;" id="loginwindow">
         <div class="loginwindow" style="padding-top:50px;">
             <h1>Login</h1>
+            
             <?php $form = ActiveForm::begin([
                 'id' => 'login-form',
                 'layout' => 'horizontal',

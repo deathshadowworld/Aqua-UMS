@@ -728,7 +728,7 @@ class DBHandler
         $dbusername = 'ec2-user';
         $dbpassword = self::getDBPassword();
         $connection = pg_connect("host=$host port=$port dbname=$dbname user=$dbusername password=$dbpassword");
-        $query = "INSERT INTO \"waterlog\" (log_id,sensor_id,time_taken,\"pH\",\"Do\",salinity,ammonia, nitrate, turbidity,temp,depth,type) VALUES 
+        $query = "INSERT INTO \"waterlog\" (log_id,sensor_id,time_taken,\"ph\",\"do\",salinity,ammonia, nitrate, turbidity,temp,depth,type) VALUES 
         (" . $id . ",'" . $sensor_id . "','" . $datetime . "','" . $ph . "','" . $do . "','" . $sal . "','" . $amm . "','" . $nit . "','" . $tur . "','" . $temp . "','" . $dep . "','" . $type . "');";
         $result = pg_query($connection, $query);
         $query = "INSERT INTO \"message\" (message_id,type,tank_id,time_posted,content) VALUES 
